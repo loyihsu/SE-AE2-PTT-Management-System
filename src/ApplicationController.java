@@ -1,12 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import datatype.*;
 import database.*;
 import database.filedb.*;
 
-public class ApplicationController {
+public class ApplicationController implements ActionListener {
     private Database database;
     private ApplicationView view;
 
@@ -19,7 +21,7 @@ public class ApplicationController {
             e.printStackTrace();
         }
 
-        view = new ApplicationView();
+        view = new ApplicationView(this, database);
     }
 
     public Database getDatabase() {
@@ -28,6 +30,14 @@ public class ApplicationController {
 
     public ApplicationView getView() {
         return view;
+    }
+
+    // ===============================================
+    // ActionListener
+    // ===============================================
+
+    public void actionPerformed(ActionEvent event) {
+
     }
 
     public static void main(String[] args) {
