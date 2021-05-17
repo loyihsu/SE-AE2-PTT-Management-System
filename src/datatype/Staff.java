@@ -3,6 +3,8 @@ package datatype;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import datatype.builder.StaffBuilder;
+
 public class Staff {
     private int id;
     private String name;
@@ -62,8 +64,15 @@ public class Staff {
                     allTrainings.add(s.next());
                 }
             }
-            Staff ts = new Staff(id, name, date, allTrainings);
-            staff.add(ts);
+            StaffBuilder builder = StaffBuilder.getInstance();
+
+            Staff temp = builder.setId(id)
+                                 .setName(name)
+                                 .setDateOfJoining(date)
+                                 .setTrainingsReceived(allTrainings)
+                                 .build();
+
+            staff.add(temp);
         }
     }
 

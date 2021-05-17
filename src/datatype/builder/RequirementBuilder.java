@@ -2,7 +2,7 @@ package datatype.builder;
 
 import java.util.ArrayList;
 
-import datatype.*;
+import datatype.Requirement;
 
 public class RequirementBuilder extends Builder<Requirement> {
     private int id = 0;
