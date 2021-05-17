@@ -10,10 +10,20 @@ public class StaffBuilder extends Builder<Staff> {
     private String dateOfJoining;
     private ArrayList<String> trainingsReceived;
 
+    // ===============================================
+    // Singleton
+    // ===============================================
     public static StaffBuilder instance = new StaffBuilder();
 
     private StaffBuilder() { }
 
+    public static StaffBuilder getInstance() {
+        return instance;
+    }
+
+    // ===============================================
+    // Setters
+    // ===============================================
     public StaffBuilder setId(int value) {
         id = value;
         return this;
@@ -34,10 +44,9 @@ public class StaffBuilder extends Builder<Staff> {
         return this;
     }
 
-    public static StaffBuilder getInstance() {
-        return instance;
-    }
-
+    // ===============================================
+    // Builder
+    // ===============================================
     public Staff build() {
         return new Staff(id, name, dateOfJoining, trainingsReceived);
     }

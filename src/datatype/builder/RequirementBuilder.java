@@ -10,10 +10,20 @@ public class RequirementBuilder extends Builder<Requirement> {
     private int numberOfStaffNeeded = 0;
     private ArrayList<String> trainingsNeeded = new ArrayList<String>();
     
+    // ===============================================
+    // Singleton
+    // ===============================================
     public static RequirementBuilder instance = new RequirementBuilder();
-
+    
     private RequirementBuilder() { }
+    
+    public static RequirementBuilder getInstance() {
+        return instance;
+    }
 
+    // ===============================================
+    // Setters
+    // ===============================================
     public RequirementBuilder setId(int value) {
         id = value;
         return this;
@@ -34,10 +44,9 @@ public class RequirementBuilder extends Builder<Requirement> {
         return this;
     }
 
-    public static RequirementBuilder getInstance() {
-        return instance;
-    }
-
+    // ===============================================
+    // Builder
+    // ===============================================
     public Requirement build() {
         return new Requirement(id,courseId,numberOfStaffNeeded,trainingsNeeded);
     }
