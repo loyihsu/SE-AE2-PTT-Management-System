@@ -62,11 +62,11 @@ public class FileDB implements Database {
         FileWriter writer = new FileWriter(filepath);
         String output = "";
         for (Requirement requirement: requirements) {
-            output += requirement.exportString() + "\n";
+            output += requirement.toString() + "\n";
         }
         output += "\n";
         for (Staff person: staff) {;
-            output += person.exportString() + "\n";
+            output += person.toString() + "\n";
         }
         writer.write(output);
         writer.close();

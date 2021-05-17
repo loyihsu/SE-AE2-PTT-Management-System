@@ -19,7 +19,17 @@ public class Staff {
     }
 
     public String toString() {
-        // This is for debugging.
+        String output = id + "," + name + "," + dateOfJoining + ",";
+        for (String item: trainingsReceived) {
+            output += item + " ";
+        }
+        return output;
+    }
+
+    /**
+    This is the descriptive string for debugging.
+    */ 
+    public String debugString() {
         String output = "";
         output += "[" + id + "," + name + " (" + dateOfJoining + ")]: ";
         
@@ -27,14 +37,6 @@ public class Staff {
             output += training + ", ";
         }
 
-        return output;
-    }
-
-    public String exportString() {
-        String output = id + "," + name + "," + dateOfJoining + ",";
-        for (String item: trainingsReceived) {
-            output += item + " ";
-        }
         return output;
     }
     

@@ -19,7 +19,17 @@ public class Requirement {
     }
 
     public String toString() {
-        // This is for debugging.
+        String output = id + "," + courseId + "," + numberOfStaffNeeded + ",";
+        for (String item: trainingsNeeded) {
+            output += item + " ";
+        }
+        return output;
+    }
+    
+    /**
+    This is the descriptive string for debugging.
+    */ 
+    public String debugString() {    
         String output = "";
         output += "(" + id + " for "+ courseId +"): ";
         output +=  numberOfStaffNeeded + " people needed, trainings: ";
@@ -29,13 +39,6 @@ public class Requirement {
         return output;
     }
 
-    public String exportString() {
-        String output = id + "," + courseId + "," + numberOfStaffNeeded + ",";
-        for (String item: trainingsNeeded) {
-            output += item + " ";
-        }
-        return output;
-    }
 
     // ===============================================
     // Helpers
