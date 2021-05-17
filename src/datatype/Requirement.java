@@ -4,22 +4,34 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Requirement {
-    private String course;
+    private int id;
+    private int courseId;
     private int numberOfStaffNeeded;
     private ArrayList<String> trainingsNeeded;
+    private ArrayList<Staff> assignedStaff = new ArrayList<Staff>();
     
-    public Requirement(String courseString, int number, ArrayList<String> trainings) {
-        course = courseString;
-        numberOfStaffNeeded = number;
-        trainingsNeeded = trainings;
+    public Requirement(int id, int courseId, int numberOfStaffNeeded, ArrayList<String> trainingsNeeded) {
+        this.id = id;
+        this.courseId = courseId;
+        this.numberOfStaffNeeded = numberOfStaffNeeded;
+        this.trainingsNeeded = trainingsNeeded;
     }
 
     public String toString() {
         // This is for debugging.
         String output = "";
-        output += course + ": " + numberOfStaffNeeded + " needed, trainings: ";
+        output += "(" + id + " for "+ courseId +"): ";
+        output +=  numberOfStaffNeeded + " people needed, trainings: ";
         for (String training: trainingsNeeded) {
             output += training + ", ";
+        }
+        return output;
+    }
+
+    public String exportString() {
+        String output = id + "," + courseId + "," + numberOfStaffNeeded + ",";
+        for (String item: trainingsNeeded) {
+            output += item + " ";
         }
         return output;
     }
@@ -39,8 +51,9 @@ public class Requirement {
         for (String item: arr) {
             scanner = new Scanner(item).useDelimiter(",");
 
-            String courseName = scanner.next();
-            int number = scanner.nextInt();
+            int id = scanner.nextInt();
+            int courseId = scanner.nextInt();
+            int numberOfStaffNeeded = scanner.nextInt();
 
             ArrayList<String> allRequirements = new ArrayList<String>();
             if (scanner.hasNext()) {
@@ -50,7 +63,7 @@ public class Requirement {
                 }
             }
             
-            Requirement tr = new Requirement(courseName, number, allRequirements);
+            Requirement tr = new Requirement(id, courseId, numberOfStaffNeeded, allRequirements);
             requirements.add(tr);
         }
     }
@@ -58,8 +71,12 @@ public class Requirement {
     // ===============================================
     // Getters
     // ===============================================
-    public String getCourse() {
-        return course;
+    public int getId() {
+        return id;
+    }
+
+    public int getCourseId() {
+        return courseId;
     }
 
     public int getNumberOfStaffNeeded() {
@@ -68,5 +85,9 @@ public class Requirement {
 
     public ArrayList<String> getTrainingsNeeded() {
         return trainingsNeeded;
+    }
+
+    public ArrayList<Staff> getAssignedStaff() {
+        return assignedStaff;
     }
 }

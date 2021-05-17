@@ -61,20 +61,12 @@ public class FileDB implements Database {
     public void write() throws IOException {
         FileWriter writer = new FileWriter(filepath);
         String output = "";
-        for (Requirement req: requirements) {
-            output += req.getCourse() + "," + req.getNumberOfStaffNeeded() + ",";
-            for (String item: req.getTrainingsNeeded()) {
-                output += item + " ";
-            }
-            output += "\n";
+        for (Requirement requirement: requirements) {
+            output += requirement.exportString() + "\n";
         }
         output += "\n";
         for (Staff person: staff) {;
-            output += person.getId() + "," + person.getName() + ",";
-            for (String item: person.getTrainingsReceived()) {
-                output += item + " ";
-            }
-            output += "\n";
+            output += person.exportString() + "\n";
         }
         writer.write(output);
         writer.close();

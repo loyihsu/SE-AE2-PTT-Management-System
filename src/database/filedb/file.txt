@@ -1,8 +1,8 @@
-1,10,programming databaseDesign 
-2,5,databaseDesign 
-2,4,programming 
+1,1,10,programming databaseDesign 
+2,2,5,databaseDesign 
+3,2,4,programming 
 
-1,Leo,programming 
-2,Alice,
-3,Chris,databaseDesign programming 
-4,Simon,programming 
+1,Leo,18-05-2019,programming 
+2,Alice,18-06-2020,
+3,Chris,01-01-2019,databaseDesign programming 
+4,Simon,01-01-2018,programming 

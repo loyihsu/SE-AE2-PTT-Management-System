@@ -4,25 +4,35 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Staff {
-    private String id;
+    private int id;
     private String name;
+    private String dateOfJoining;
     private ArrayList<String> trainingsReceived;
     
-    public Staff(String employeeId, String employeeName, ArrayList<String> trainings) {
-        id = employeeId;
-        name = employeeName;
-        trainingsReceived = trainings;
+    public Staff(int id, String name, String dateOfJoining, ArrayList<String> trainingsReceived) {
+        this.id = id;
+        this.name = name;
+        this.dateOfJoining = dateOfJoining;
+        this.trainingsReceived = trainingsReceived;
     }
 
     public String toString() {
         // This is for debugging.
         String output = "";
-        output += "[" + id + "," + name + "]: ";
+        output += "[" + id + "," + name + " (" + dateOfJoining + ")]: ";
         
         for (String training: trainingsReceived) {
             output += training + ", ";
         }
 
+        return output;
+    }
+
+    public String exportString() {
+        String output = id + "," + name + "," + dateOfJoining + ",";
+        for (String item: trainingsReceived) {
+            output += item + " ";
+        }
         return output;
     }
     
@@ -41,8 +51,9 @@ public class Staff {
         for (String item: arr) {
             scanner = new Scanner(item).useDelimiter(",");
 
-            String id = scanner.next();
+            int id = scanner.nextInt();
             String name = scanner.next();
+            String date = scanner.next();
 
             ArrayList<String> allTrainings = new ArrayList<String>();
             if (scanner.hasNext()) {
@@ -51,7 +62,7 @@ public class Staff {
                     allTrainings.add(s.next());
                 }
             }
-            Staff ts = new Staff(id, name, allTrainings);
+            Staff ts = new Staff(id, name, date, allTrainings);
             staff.add(ts);
         }
     }
@@ -59,12 +70,16 @@ public class Staff {
     // ===============================================
     // Getter and Setter
     // ===============================================
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getDateOfJoining() {
+        return dateOfJoining;
     }
 
     public ArrayList<String> getTrainingsReceived() {
