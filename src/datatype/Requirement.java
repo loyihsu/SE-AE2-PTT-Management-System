@@ -3,6 +3,8 @@ package datatype;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import datatype.builder.*;
+
 public class Requirement {
     private int id;
     private int courseId;
@@ -63,8 +65,15 @@ public class Requirement {
                 }
             }
             
-            Requirement tr = new Requirement(id, courseId, numberOfStaffNeeded, allRequirements);
-            requirements.add(tr);
+            RequirementBuilder builder = RequirementBuilder.getInstance();
+
+            Requirement temp = builder.setId(id)
+                                       .setCourseId(courseId)
+                                       .setNumberOfStaffNeeded(numberOfStaffNeeded)
+                                       .setTrainingsNeeded(allRequirements)
+                                       .build();
+
+            requirements.add(temp);
         }
     }
     
