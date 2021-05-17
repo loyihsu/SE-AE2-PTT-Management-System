@@ -7,15 +7,10 @@ import datatype.builder.RequirementBuilder;
 
 public class Requirement {
     private int id;
+    private int courseId;
     private int numberOfStaffNeeded;
     private ArrayList<String> trainingsNeeded;
-
-    // The following attributes are prepared but not used in this code.
-    private int courseId;       // To refer back to the course.
-    private ArrayList<Staff> assignedStaff = new ArrayList<Staff>();
-    // To show a list of Staff assigned to the lab.
-    // Storing back to the file is considered out of the scope after team discussion.
-    
+   
     public Requirement(int id, int courseId, int numberOfStaffNeeded, ArrayList<String> trainingsNeeded) {
         this.id = id;
         this.courseId = courseId;
@@ -98,9 +93,5 @@ public class Requirement {
 
     public ArrayList<String> getTrainingsNeeded() {
         return trainingsNeeded;
-    }
-
-    public ArrayList<Staff> getAssignedStaff() {
-        return assignedStaff;
     }
 }
