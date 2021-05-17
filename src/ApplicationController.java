@@ -12,16 +12,9 @@ public class ApplicationController implements ActionListener {
     private Database database;
     private ApplicationView view;
 
-    public ApplicationController() {
-        // This code dynamically find the file.txt file in the database/filedb folder and create a Database object from it.
-        // Running from javac.
-        try {
-            database = new FileDB(new File("./database/filedb/file.txt").getAbsolutePath());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        view = new ApplicationView(this, database);
+    public ApplicationController(Database database) {
+        this.database = database;
+        this.view = new ApplicationView(this, database);
     }
 
     public Database getDatabase() {
@@ -40,15 +33,11 @@ public class ApplicationController implements ActionListener {
 
     }
 
-    public static void main(String[] args) {
-        ApplicationController controller = new ApplicationController();
-        Database db = controller.getDatabase();
-
-        // This is testing the write function of the database.
-        try {
-            db.write();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
+    public static void main(String[] args) throws IOException {
+        // This code dynamically find the file.txt file in the database/filedb folder and create a Database object from it.
+        String filepath = new File("./database/filedb/file.txt").getAbsolutePath();
+        Database database = new FileDB(filepath);
+        ApplicationController controller = new ApplicationController(database);
+        database.write();
     }
 }

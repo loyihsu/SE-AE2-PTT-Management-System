@@ -76,7 +76,6 @@ public class FileDB implements Database {
             }
             output += "\n";
         }
-        System.out.println(output);
         writer.write(output);
         writer.close();
     }
