@@ -16,7 +16,7 @@ public class FileDB implements Database {
     
     private TableFindable<Requirement> requirements = new RequirementTable();
     private TableFindable<Staff> staff = new StaffTable();
-    private Table<Assignment> assignments = new AssignmentTable();
+    private TableCleanableByTypes<Assignment> assignments = new AssignmentTable();
 
     /**
     The initialiser of the File Database.
@@ -75,7 +75,7 @@ public class FileDB implements Database {
         writer.close();        
     }
 
-    public Table<Assignment> getAssignmentTable() {
+    public TableCleanableByTypes<Assignment> getAssignmentTable() {
         return assignments;
     }
 
