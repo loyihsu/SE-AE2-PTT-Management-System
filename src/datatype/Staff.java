@@ -97,6 +97,16 @@ public class Staff {
         return trainingsReceived;
     }
 
+    public void addTrainingReceived(String training) {
+        if (!trainingsReceived.contains(training)) {
+            trainingsReceived.add(training);
+        }
+    }
+
+    public void editName(String newName) {
+        name = newName;
+    }
+
     public boolean equals(Object another) {
         if (another instanceof Staff) {
             return this.toString().equals(another.toString());
