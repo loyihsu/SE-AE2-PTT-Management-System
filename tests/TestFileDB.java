@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class TestDB {
+public class TestFileDB {
     @Test
     void testFilterBySkill() throws FileNotFoundException {
         String path = new File("./tests/file.txt").getAbsolutePath();
