@@ -1,14 +1,18 @@
 package src;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import src.datatype.*;
+import src.view.*;
 import src.database.*;
 import src.database.filedb.*;
+import src.view.ApplicationView;
+import src.view.requirement.*;
+import src.view.staff.*;
+
+import javax.swing.*;
 
 public class ApplicationController implements ActionListener {
     private Database database;
@@ -39,6 +43,10 @@ public class ApplicationController implements ActionListener {
         String filepath = new File("./src/database/filedb/file.txt").getAbsolutePath();
         Database database = new FileDB(filepath);
         ApplicationController controller = new ApplicationController(database);
-        database.write();
+
+        JFrame gui = controller.getView();
+        gui.setVisible(true);
+
+//        database.write();
     }
 }
