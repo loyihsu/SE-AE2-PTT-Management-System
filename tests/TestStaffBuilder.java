@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import src.datatype.*;
 import src.datatype.builder.*;
 
-
-
 public class TestStaffBuilder {
     @Test
     void testStaffBuilder() {
