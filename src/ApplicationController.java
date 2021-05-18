@@ -60,9 +60,9 @@ public class ApplicationController implements ActionListener {
         Database database = new FileDB(filepath);
         ApplicationController controller = new ApplicationController(database);
 
-        JFrame gui = controller.getView();
-        gui.setVisible(true);
+//        JFrame gui = controller.getView();
+//        gui.setVisible(true);
 
-//        database.write();
+        database.write();
     }
 }

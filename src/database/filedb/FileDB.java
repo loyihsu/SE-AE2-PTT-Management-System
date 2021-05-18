@@ -9,13 +9,14 @@ import java.util.ArrayList;
 
 import src.database.*;
 import src.datatype.*;
+import src.database.filedb.tables.*;
 
 public class FileDB implements Database {
     private String filepath;
     
-    private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
-    private ArrayList<Staff> staff = new ArrayList<Staff>();
-    private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
+    private TableFindable<Requirement> requirements = new RequirementTable();
+    private TableFindable<Staff> staff = new StaffTable();
+    private Table<Assignment> assignments = new AssignmentTable();
 
     /**
     The initialiser of the File Database.
@@ -29,36 +30,30 @@ public class FileDB implements Database {
         ArrayList<String> reqs = new ArrayList<String>();
         ArrayList<String> people = new ArrayList<String>();
         ArrayList<String> ass = new ArrayList<String>();
-        
+
         Scanner scanner = new Scanner(reader);
         String temp = "";
-        int mode = 0;
+        int section = 0;
         
         while (scanner.hasNextLine()) {
             temp = scanner.nextLine();
             if (temp.equals("")) {
-                mode++;
+                section++;
                 continue;
             }
-            if (mode == 0) {
+            if (section == 0) {
                 reqs.add(temp);
-            } else if (mode == 1) {
+            } else if (section == 1) {
                 people.add(temp);
             } else {
                 ass.add(temp);
             }
         }
         
-        Requirement.parse(reqs, requirements);
-        Staff.parse(people, staff);
+        requirements = new RequirementTable(reqs);
+        staff = new StaffTable(people);
+        assignments = new AssignmentTable(ass, requirements, staff);
 
-        for (String line: ass) {
-            scanner = new Scanner(line).useDelimiter(",");
-            int sid = scanner.nextInt();
-            int rid = scanner.nextInt();
-            assign(sid, rid);
-        }
-        
         scanner.close();
     }
 
@@ -73,88 +68,22 @@ public class FileDB implements Database {
     public void write() throws IOException {
         FileWriter writer = new FileWriter(filepath);
         String output = "";
-        for (Requirement requirement: requirements) {
-            output += requirement.toString() + "\n";
-        }
-        output += "\n";
-        for (Staff person: staff) {;
-            output += person.toString() + "\n";
-        }
-        output += "\n";
-        for (Assignment ass: assignments) {
-            output += ass.toString() + "\n";
-        }
+        output += requirements.toString() + "\n";
+        output += staff.toString() + "\n";
+        output += assignments.toString();
         writer.write(output);
-        writer.close();
+        writer.close();        
     }
 
-    // ===============================================
-    // Assignment
-    // ===============================================
-    private void assign(int staffId, int requirementId) {
-        Staff staff = getSpecificStaff(staffId);
-        Requirement requirement = getRequirement(requirementId);
-        assignments.add(new Assignment(staff, requirement));
+    public Table<Assignment> getAssignmentTable() {
+        return assignments;
     }
 
-    // ===============================================
-    // Getters and Setters
-    // ===============================================
-    // Requirements
-    public Requirement getRequirement(int id) {
-        for (Requirement item: requirements) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<Requirement> getRequirements() {
+    public TableFindable<Requirement> getRequirementTable() {
         return requirements;
     }
 
-    public void addRequirement(Requirement requirement) {
-        requirements.add(requirement);
-    }
-
-    public void removeRequirement(Requirement requirement) {
-        requirements.remove(requirement);
-    }
-
-    // Staff
-    public Staff getSpecificStaff(int id) {
-        for (Staff person: staff) {
-            if (person.getId() == id) {
-                return person;
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<Staff> getStaff() {
+    public TableFindable<Staff> getStaffTable() {
         return staff;
-    }
-
-    public void addStaff(Staff newStaff) {
-        staff.add(newStaff);
-    }
-
-    public void removeStaff(Staff staffToRemove) {
-        staff.remove(staffToRemove);
-    }
-
-    public ArrayList<Staff> getStaffWith(ArrayList<String> skills) {
-        ArrayList<Staff> temp = (ArrayList<Staff>) staff.clone();
-        for (String skill: skills) {
-            ArrayList<Staff> newTemp = new ArrayList<Staff>();
-            for (Staff s: temp) {
-                if (s.getTrainingsReceived().contains(skill)) {
-                    newTemp.add(s);
-                }
-            }
-            temp = newTemp;
-        }
-        return temp;
     }
 }

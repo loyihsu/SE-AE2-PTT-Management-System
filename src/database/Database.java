@@ -1,6 +1,5 @@
 package src.database;
 
-import java.util.ArrayList;
 import java.io.IOException;
 
 import src.datatype.*;
@@ -14,17 +13,7 @@ public interface Database {
     // ===============================================
     // Getters
     // ===============================================
-    public Requirement getRequirement(int id);
-    public ArrayList<Requirement> getRequirements();
-    public Staff getSpecificStaff(int id);
-    public ArrayList<Staff> getStaff();
-    public ArrayList<Staff> getStaffWith(ArrayList<String> skills);
-
-    // ===============================================
-    // Setters
-    // ===============================================
-    public void addRequirement(Requirement requirement);
-    public void removeRequirement(Requirement requirement);
-    public void addStaff(Staff newStaff);
-    public void removeStaff(Staff staffToRemove);
+    public TableFindable<Requirement> getRequirementTable();
+    public TableFindable<Staff> getStaffTable();
+    public Table<Assignment> getAssignmentTable();
 }

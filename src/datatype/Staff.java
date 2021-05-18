@@ -1,9 +1,6 @@
 package src.datatype;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import src.datatype.builder.StaffBuilder;
 
 public class Staff {
     private int id;
@@ -38,44 +35,6 @@ public class Staff {
         }
 
         return output;
-    }
-    
-    // ===============================================
-    // Helpers
-    // ===============================================
-    /**
-    This method takes the staff in the file (in Strings list), parse the contents
-    and create Staff objects to store them into the list. 
-    The file.txt file structure and the data structure should be updated simultaneously.
-    @param arr The requirements Strings list.
-    @param staff The output ArrayList object for generated items to be added to.
-     */
-    public static void parse(ArrayList<String> arr, ArrayList<Staff> staff) {
-        Scanner scanner;
-        for (String item: arr) {
-            scanner = new Scanner(item).useDelimiter(",");
-
-            int id = scanner.nextInt();
-            String name = scanner.next();
-            String date = scanner.next();
-
-            ArrayList<String> allTrainings = new ArrayList<String>();
-            if (scanner.hasNext()) {
-                Scanner s = new Scanner(scanner.next());
-                while (s.hasNext()) {
-                    allTrainings.add(s.next());
-                }
-            }
-            StaffBuilder builder = StaffBuilder.getInstance();
-
-            Staff temp = builder.setId(id)
-                                 .setName(name)
-                                 .setDateOfJoining(date)
-                                 .setTrainingsReceived(allTrainings)
-                                 .build();
-
-            staff.add(temp);
-        }
     }
 
     // ===============================================

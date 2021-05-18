@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import src.database.filedb.tables.RequirementTable;
 import src.datatype.*;
 import src.datatype.builder.*;
 
@@ -73,16 +74,15 @@ public class TestRequirementBuilder {
                                 .build();
         expectedResult.add(req);
 
-        ArrayList<Requirement> result = new ArrayList<Requirement>();
         ArrayList<String> inputList = new ArrayList<String>();
         Scanner scanner = new Scanner(testcase);
         while (scanner.hasNextLine()) {
             inputList.add(scanner.nextLine());
         }
-        Requirement.parse(inputList, result);
+        RequirementTable table = new RequirementTable(inputList);
 
-        for (int i = 0, length = result.size(); i < length; i++) {
-            assertTrue(expectedResult.get(i).equals(result.get(i)));
+        for (int i = 0, length = table.getTable().size(); i < length; i++) {
+            assertTrue(expectedResult.get(i).equals(table.getTable().get(i)));
         }
     }
 }

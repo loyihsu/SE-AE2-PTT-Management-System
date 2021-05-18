@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import src.database.filedb.tables.StaffTable;
 import src.datatype.*;
 import src.datatype.builder.*;
 
@@ -71,16 +72,15 @@ public class TestStaffBuilder {
                              .build();
         expectedResult.add(person);
 
-        ArrayList<Staff> result = new ArrayList<Staff>();
         ArrayList<String> inputList = new ArrayList<String>();
         Scanner scanner = new Scanner(testcase);
         while (scanner.hasNextLine()) {
             inputList.add(scanner.nextLine());
         }
-        Staff.parse(inputList, result);
+        StaffTable table = new StaffTable(inputList);
 
-        for (int i = 0, length = result.size(); i < length; i++) {
-            assertTrue(expectedResult.get(i).equals(result.get(i)));
+        for (int i = 0, length = table.getTable().size(); i < length; i++) {
+            assertTrue(expectedResult.get(i).equals(table.getTable().get(i)));
         }
 
     }
