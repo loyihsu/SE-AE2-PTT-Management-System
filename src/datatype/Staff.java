@@ -1,9 +1,9 @@
-package datatype;
+package src.datatype;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import datatype.builder.StaffBuilder;
+import src.datatype.builder.StaffBuilder;
 
 public class Staff {
     private int id;
@@ -95,5 +95,12 @@ public class Staff {
 
     public ArrayList<String> getTrainingsReceived() {
         return trainingsReceived;
+    }
+
+    public boolean equals(Object another) {
+        if (another instanceof Staff) {
+            return this.toString().equals(another.toString());
+        }
+        return false;
     }
 }

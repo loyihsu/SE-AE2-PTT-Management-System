@@ -1,8 +1,8 @@
-package datatype.builder;
+package src.datatype.builder;
 
 import java.util.ArrayList;
 
-import datatype.Requirement;
+import src.datatype.Requirement;
 
 public class RequirementBuilder extends Builder<Requirement> {
     private int id = 0;

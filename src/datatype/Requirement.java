@@ -1,9 +1,9 @@
-package datatype;
+package src.datatype;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import datatype.builder.RequirementBuilder;
+import src.datatype.builder.RequirementBuilder;
 
 public class Requirement {
     private int id;
@@ -96,5 +96,12 @@ public class Requirement {
 
     public ArrayList<String> getTrainingsNeeded() {
         return trainingsNeeded;
+    }
+
+    public boolean equals(Object another) {
+        if (another instanceof Requirement) {
+            return this.toString().equals(another.toString());
+        }
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-package database.filedb;
+package src.database.filedb;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-import database.*;
-import datatype.*;
+import src.database.*;
+import src.datatype.*;
 
 public class FileDB implements Database {
     private String filepath;

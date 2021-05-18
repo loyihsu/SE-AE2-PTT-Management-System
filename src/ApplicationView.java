@@ -1,5 +1,7 @@
-import database.*;
-import database.filedb.*;
+package src;
+
+import src.database.*;
+import src.database.filedb.*;
 
 public class ApplicationView {
     private Database database;
