@@ -1,23 +1,37 @@
-package datatype;
+package src.datatype;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import src.datatype.builder.StaffBuilder;
+
 public class Staff {
-    private String id;
+    private int id;
     private String name;
+    private String dateOfJoining;
     private ArrayList<String> trainingsReceived;
     
-    public Staff(String employeeId, String employeeName, ArrayList<String> trainings) {
-        id = employeeId;
-        name = employeeName;
-        trainingsReceived = trainings;
+    public Staff(int id, String name, String dateOfJoining, ArrayList<String> trainingsReceived) {
+        this.id = id;
+        this.name = name;
+        this.dateOfJoining = dateOfJoining;
+        this.trainingsReceived = trainingsReceived;
     }
 
     public String toString() {
-        // This is for debugging.
+        String output = id + "," + name + "," + dateOfJoining + ",";
+        for (String item: trainingsReceived) {
+            output += item + " ";
+        }
+        return output;
+    }
+
+    /**
+    This is the descriptive string for debugging.
+    */ 
+    public String debugString() {
         String output = "";
-        output += "[" + id + "," + name + "]: ";
+        output += "[" + id + "," + name + " (" + dateOfJoining + ")]: ";
         
         for (String training: trainingsReceived) {
             output += training + ", ";
@@ -41,8 +55,9 @@ public class Staff {
         for (String item: arr) {
             scanner = new Scanner(item).useDelimiter(",");
 
-            String id = scanner.next();
+            int id = scanner.nextInt();
             String name = scanner.next();
+            String date = scanner.next();
 
             ArrayList<String> allTrainings = new ArrayList<String>();
             if (scanner.hasNext()) {
@@ -51,15 +66,22 @@ public class Staff {
                     allTrainings.add(s.next());
                 }
             }
-            Staff ts = new Staff(id, name, allTrainings);
-            staff.add(ts);
+            StaffBuilder builder = StaffBuilder.getInstance();
+
+            Staff temp = builder.setId(id)
+                                 .setName(name)
+                                 .setDateOfJoining(date)
+                                 .setTrainingsReceived(allTrainings)
+                                 .build();
+
+            staff.add(temp);
         }
     }
 
     // ===============================================
     // Getter and Setter
     // ===============================================
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -67,7 +89,18 @@ public class Staff {
         return name;
     }
 
+    public String getDateOfJoining() {
+        return dateOfJoining;
+    }
+
     public ArrayList<String> getTrainingsReceived() {
         return trainingsReceived;
+    }
+
+    public boolean equals(Object another) {
+        if (another instanceof Staff) {
+            return this.toString().equals(another.toString());
+        }
+        return false;
     }
 }

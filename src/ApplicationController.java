@@ -1,12 +1,14 @@
+package src;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import datatype.*;
-import database.*;
-import database.filedb.*;
+import src.datatype.*;
+import src.database.*;
+import src.database.filedb.*;
 
 public class ApplicationController implements ActionListener {
     private Database database;
@@ -35,7 +37,7 @@ public class ApplicationController implements ActionListener {
 
     public static void main(String[] args) throws IOException {
         // This code dynamically find the file.txt file in the database/filedb folder and create a Database object from it.
-        String filepath = new File("./database/filedb/file.txt").getAbsolutePath();
+        String filepath = new File("./src/database/filedb/file.txt").getAbsolutePath();
         Database database = new FileDB(filepath);
         ApplicationController controller = new ApplicationController(database);
         database.write();

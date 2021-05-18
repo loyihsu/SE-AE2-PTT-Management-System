@@ -1,9 +1,9 @@
-package database;
+package src.database;
 
 import java.util.ArrayList;
 import java.io.IOException;
 
-import datatype.*;
+import src.datatype.*;
 
 /**
 The Database interface defining things all Database implementations should have.
