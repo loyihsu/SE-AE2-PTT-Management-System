@@ -30,7 +30,6 @@ public class ApplicationController implements ActionListener {
     // ===============================================
     // ActionListener
     // ===============================================
-
     public void actionPerformed(ActionEvent event) {
 
     }
