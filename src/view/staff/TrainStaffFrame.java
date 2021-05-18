@@ -13,8 +13,7 @@ public class TrainStaffFrame extends JFrame {
 
     public TrainStaffFrame() {
         setSize(300, 200);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Add Staff");
+        setTitle("Train Staff");
 
         JPanel contentPanel = new JPanel();
 

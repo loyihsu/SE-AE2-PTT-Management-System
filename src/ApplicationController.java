@@ -17,6 +17,7 @@ import javax.swing.*;
 public class ApplicationController implements ActionListener {
     private Database database;
     private ApplicationView view;
+    private JFrame popup;
 
     public ApplicationController(Database database) {
         this.database = database;
@@ -35,7 +36,22 @@ public class ApplicationController implements ActionListener {
     // ActionListener
     // ===============================================
     public void actionPerformed(ActionEvent event) {
+        if (event.getSource() == view.getStaffPanel().getControlPanel().getAddStaff()) {
+            setPopupAndSetVisible(new AddStaffFrame());
+        } else if (event.getSource() == view.getStaffPanel().getControlPanel().getTrainStaff()) {
+            setPopupAndSetVisible(new TrainStaffFrame());
+        } else if (event.getSource() == view.getRequirementPanel().getControlPanel().getNewLab()) {
+            setPopupAndSetVisible(new AddRequirementFrame());
+        } else if (event.getSource() == view.getRequirementPanel().getControlPanel().getAssignStaff()) {
+            setPopupAndSetVisible(new AssignStaffFrame());
+        }
+    }
 
+    private void setPopupAndSetVisible(JFrame view) {
+        if (popup == null || popup.isVisible() == false){
+            popup = view;
+            popup.setVisible(true);
+        }
     }
 
     public static void main(String[] args) throws IOException {

@@ -11,6 +11,8 @@ public class ApplicationView extends JFrame {
     private Database database;
     private ApplicationController controller;
     private JTabbedPane tabbedPane;
+    RequirementPanel requirementPanel;
+    StaffPanel staffPanel;
 
     public ApplicationView(ApplicationController c, Database db) {
         database = db;
@@ -21,11 +23,19 @@ public class ApplicationView extends JFrame {
         setTitle("Application");
 
         tabbedPane = new JTabbedPane();
-        JPanel requirementPanel = new RequirementPanel();
+        requirementPanel = new RequirementPanel(c);
         tabbedPane.addTab("Labs", requirementPanel);
-        JPanel staffPanel = new StaffPanel();
+        staffPanel = new StaffPanel(c);
         tabbedPane.addTab("Staff", staffPanel);
 
         this.add(tabbedPane);
+    }
+
+    public RequirementPanel getRequirementPanel() {
+        return requirementPanel;
+    }
+
+    public StaffPanel getStaffPanel() {
+        return staffPanel;
     }
 }

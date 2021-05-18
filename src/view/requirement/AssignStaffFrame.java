@@ -10,7 +10,6 @@ public class AssignStaffFrame extends JFrame {
     JButton sendButton;
     public AssignStaffFrame() {
         setSize(300, 200);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Assign Staff");
 
         lab = new JLabelAndBox("Lab ID");

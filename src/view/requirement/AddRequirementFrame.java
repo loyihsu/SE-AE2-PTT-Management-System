@@ -12,7 +12,6 @@ public class AddRequirementFrame extends JFrame {
     JButton sendButton;
     public AddRequirementFrame() {
         setSize(300, 200);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Add Staff");
 
         JPanel contentPanel = new JPanel();

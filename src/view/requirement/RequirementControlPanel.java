@@ -2,15 +2,26 @@ package src.view.requirement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class RequirementControlPanel extends JPanel {
-    JButton button1, button2;
+    JButton newLab, assignStaff;
 
-    public RequirementControlPanel() {
+    public RequirementControlPanel(ActionListener controller) {
         this.setLayout(new GridLayout(0,1));
-        button1 = new JButton("Add new Lab");
-        button2 = new JButton("Assign Staff to Lab");
-        this.add(button1);
-        this.add(button2);
+        newLab = new JButton("Add new Lab");
+        newLab.addActionListener(controller);
+        assignStaff = new JButton("Assign Staff to Lab");
+        assignStaff.addActionListener(controller);
+        this.add(newLab);
+        this.add(assignStaff);
+    }
+
+    public JButton getNewLab() {
+        return newLab;
+    }
+
+    public JButton getAssignStaff() {
+        return assignStaff;
     }
 }

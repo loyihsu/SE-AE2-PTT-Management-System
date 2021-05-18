@@ -11,7 +11,6 @@ public class AddStaffFrame extends JFrame {
     JButton sendButton;
     public AddStaffFrame() {
         setSize(300, 200);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Add Staff");
 
         JPanel contentPanel = new JPanel();
