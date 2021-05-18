@@ -15,6 +15,7 @@ public class FileDB implements Database {
     
     private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
     private ArrayList<Staff> staff = new ArrayList<Staff>();
+    private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
 
     /**
     The initialiser of the File Database.
@@ -27,26 +28,41 @@ public class FileDB implements Database {
         
         ArrayList<String> reqs = new ArrayList<String>();
         ArrayList<String> people = new ArrayList<String>();
+        ArrayList<String> ass = new ArrayList<String>();
         
         Scanner scanner = new Scanner(reader);
         String temp = "";
-        boolean flag = false;
+        int mode = 0;
         
         while (scanner.hasNextLine()) {
             temp = scanner.nextLine();
             if (temp.equals("")) {
-                flag = true;
+                mode++;
                 continue;
             }
-            if (!flag) {
+            if (mode == 0) {
                 reqs.add(temp);
-            } else {
+            } else if (mode == 1) {
                 people.add(temp);
+            } else {
+                ass.add(temp);
             }
         }
         
         Requirement.parse(reqs, requirements);
         Staff.parse(people, staff);
+
+        for (String line: ass) {
+            scanner = new Scanner(line).useDelimiter(",");
+            int sid = scanner.nextInt();
+            int rid = scanner.nextInt();
+            assign(sid, rid);
+        }
+
+        for (Assignment a: assignments) {
+            System.out.println(a.debugString());
+        }
+
         scanner.close();
     }
 
@@ -68,14 +84,36 @@ public class FileDB implements Database {
         for (Staff person: staff) {;
             output += person.toString() + "\n";
         }
+        output += "\n";
+        for (Assignment ass: assignments) {
+            output += ass.toString() + "\n";
+        }
         writer.write(output);
         writer.close();
+    }
+
+    // ===============================================
+    // Assignment
+    // ===============================================
+    private void assign(int staffId, int requirementId) {
+        Staff staff = getSpecificStaff(staffId);
+        Requirement requirement = getRequirement(requirementId);
+        assignments.add(new Assignment(staff, requirement));
     }
 
     // ===============================================
     // Getters and Setters
     // ===============================================
     // Requirements
+    public Requirement getRequirement(int id) {
+        for (Requirement item: requirements) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Requirement> getRequirements() {
         return requirements;
     }
@@ -89,6 +127,15 @@ public class FileDB implements Database {
     }
 
     // Staff
+    public Staff getSpecificStaff(int id) {
+        for (Staff person: staff) {
+            if (person.getId() == id) {
+                return person;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Staff> getStaff() {
         return staff;
     }
