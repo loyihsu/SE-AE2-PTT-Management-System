@@ -1,9 +1,6 @@
 package src.datatype;
 
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import src.datatype.builder.RequirementBuilder;
 
 public class Requirement {
     private int id;
@@ -43,50 +40,6 @@ public class Requirement {
         return output;
     }
 
-
-    // ===============================================
-    // Helpers
-    // ===============================================
-    /**
-    This method takes the requirements in the file (in String list), parse the contents
-    and create Requirement objects to store them into the list.
-    The file.txt file structure and the data structure should be updated simultaneously.
-    @param arr The requirements Strings list.
-    @param requirements The output ArrayList object for generated items to be added to.
-     */
-    public static void parse(ArrayList<String> arr, ArrayList<Requirement> requirements) {
-        Scanner scanner;
-        for (String item: arr) {
-            scanner = new Scanner(item).useDelimiter(",");
-
-            int id = scanner.nextInt();
-            int courseId = scanner.nextInt();
-            int numberOfStaffNeeded = scanner.nextInt();
-            String sDate = scanner.next();
-            String eDate = scanner.next();
-
-            ArrayList<String> allRequirements = new ArrayList<String>();
-            if (scanner.hasNext()) {
-                Scanner s = new Scanner(scanner.next());
-                while (s.hasNext()) {
-                    allRequirements.add(s.next());
-                }
-            }
-            
-            RequirementBuilder builder = RequirementBuilder.getInstance();
-
-            Requirement temp = builder.setId(id)
-                                       .setCourseId(courseId)
-                                       .setNumberOfStaffNeeded(numberOfStaffNeeded)
-                                       .setTrainingsNeeded(allRequirements)
-                                       .setStartDate(sDate)
-                                       .setEndDate(eDate)
-                                       .build();
-
-            requirements.add(temp);
-        }
-    }
-    
     // ===============================================
     // Getters
     // ===============================================

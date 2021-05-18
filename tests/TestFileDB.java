@@ -19,9 +19,11 @@ public class TestFileDB {
         ArrayList<String> testcase = new ArrayList<String>();
         testcase.add("programming");
         testcase.add("databaseDesign");
-        ArrayList<Staff> res = fdb.getStaffWith(testcase);
+
+        TableFindable<Staff> staff = fdb.getStaffTable();
+        ArrayList<Staff> res = staff.findWithSkills(testcase);
         ArrayList<Staff> expectedResult = new ArrayList<Staff>();
-        expectedResult.add(fdb.getSpecificStaff(3));
+        expectedResult.add(staff.find(3));
 
         for (int i = 0, length = res.size(); i < length; i++) {
             assertTrue(res.get(i).equals(expectedResult.get(i)));
