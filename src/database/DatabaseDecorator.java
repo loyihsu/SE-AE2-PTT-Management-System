@@ -5,7 +5,7 @@ import src.datatype.*;
 import java.util.ArrayList;
 
 public class DatabaseDecorator {
-    Database database;
+    private Database database;
 
     public DatabaseDecorator(Database database) {
         this.database = database;
@@ -41,5 +41,9 @@ public class DatabaseDecorator {
         for (Assignment item: temp) {
             database.getAssignmentTable().remove(item);
         }
+    }
+
+    public Database getDatabase() {
+        return database;
     }
 }
