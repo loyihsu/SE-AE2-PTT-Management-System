@@ -1,6 +1,5 @@
 package tests;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -74,6 +73,5 @@ public class TestRequirementBuilder {
         for (int i = 0, length = result.size(); i < length; i++) {
             assertTrue(expectedResult.get(i).equals(result.get(i)));
         }
-
     }
 }
