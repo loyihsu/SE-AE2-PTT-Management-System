@@ -16,4 +16,12 @@ public class Assignment {
     public String debugString() {
         return staff.getName() + " is assigned to " + requirement.getId();
     }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
+    }
 }
