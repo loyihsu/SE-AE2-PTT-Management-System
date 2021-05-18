@@ -58,11 +58,7 @@ public class FileDB implements Database {
             int rid = scanner.nextInt();
             assign(sid, rid);
         }
-
-        for (Assignment a: assignments) {
-            System.out.println(a.debugString());
-        }
-
+        
         scanner.close();
     }
 
