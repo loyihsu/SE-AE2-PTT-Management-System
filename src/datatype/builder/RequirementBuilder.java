@@ -8,6 +8,8 @@ public class RequirementBuilder extends Builder<Requirement> {
     private int id = 0;
     private int courseId = 0;
     private int numberOfStaffNeeded = 0;
+    private String startDate = "";
+    private String endDate = "";
     private ArrayList<String> trainingsNeeded = new ArrayList<String>();
     
     // ===============================================
@@ -44,10 +46,20 @@ public class RequirementBuilder extends Builder<Requirement> {
         return this;
     }
 
+    public RequirementBuilder setStartDate(String date) {
+        startDate = date;
+        return this;
+    }
+
+    public RequirementBuilder setEndDate(String date) {
+        endDate = date;
+        return this;
+    }
+
     // ===============================================
     // Builder
     // ===============================================
     public Requirement build() {
-        return new Requirement(id,courseId,numberOfStaffNeeded,trainingsNeeded);
+        return new Requirement(id,courseId,numberOfStaffNeeded,startDate,endDate,trainingsNeeded);
     }
 }

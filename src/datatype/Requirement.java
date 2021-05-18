@@ -9,17 +9,21 @@ public class Requirement {
     private int id;
     private int courseId;
     private int numberOfStaffNeeded;
+    private String startDate;
+    private String endDate;
     private ArrayList<String> trainingsNeeded;
    
-    public Requirement(int id, int courseId, int numberOfStaffNeeded, ArrayList<String> trainingsNeeded) {
+    public Requirement(int id, int courseId, int numberOfStaffNeeded, String startDate, String endDate, ArrayList<String> trainingsNeeded) {
         this.id = id;
         this.courseId = courseId;
         this.numberOfStaffNeeded = numberOfStaffNeeded;
         this.trainingsNeeded = trainingsNeeded;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public String toString() {
-        String output = id + "," + courseId + "," + numberOfStaffNeeded + ",";
+        String output = id + "," + courseId + "," + numberOfStaffNeeded + "," + startDate+ "," + endDate + ",";
         for (String item: trainingsNeeded) {
             output += item + " ";
         }
@@ -31,7 +35,7 @@ public class Requirement {
     */ 
     public String debugString() {    
         String output = "";
-        output += "(" + id + " for "+ courseId +"): ";
+        output += "(" + id + " for "+ courseId +") ("+ startDate + "->" + endDate +"): ";
         output +=  numberOfStaffNeeded + " people needed, trainings: ";
         for (String training: trainingsNeeded) {
             output += training + ", ";
@@ -58,6 +62,8 @@ public class Requirement {
             int id = scanner.nextInt();
             int courseId = scanner.nextInt();
             int numberOfStaffNeeded = scanner.nextInt();
+            String sDate = scanner.next();
+            String eDate = scanner.next();
 
             ArrayList<String> allRequirements = new ArrayList<String>();
             if (scanner.hasNext()) {
@@ -73,6 +79,8 @@ public class Requirement {
                                        .setCourseId(courseId)
                                        .setNumberOfStaffNeeded(numberOfStaffNeeded)
                                        .setTrainingsNeeded(allRequirements)
+                                       .setStartDate(sDate)
+                                       .setEndDate(eDate)
                                        .build();
 
             requirements.add(temp);
@@ -92,6 +100,14 @@ public class Requirement {
 
     public int getNumberOfStaffNeeded() {
         return numberOfStaffNeeded;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
     }
 
     public ArrayList<String> getTrainingsNeeded() {
