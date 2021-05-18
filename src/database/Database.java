@@ -14,9 +14,12 @@ public interface Database {
     // ===============================================
     // Getters
     // ===============================================
+    public Requirement getRequirement(int id);
     public ArrayList<Requirement> getRequirements();
+    public Staff getSpecificStaff(int id);
     public ArrayList<Staff> getStaff();
-    
+    public ArrayList<Staff> getStaffWith(ArrayList<String> skills);
+
     // ===============================================
     // Setters
     // ===============================================

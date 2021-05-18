@@ -143,4 +143,18 @@ public class FileDB implements Database {
     public void removeStaff(Staff staffToRemove) {
         staff.remove(staffToRemove);
     }
+
+    public ArrayList<Staff> getStaffWith(ArrayList<String> skills) {
+        ArrayList<Staff> temp = (ArrayList<Staff>) staff.clone();
+        for (String skill: skills) {
+            ArrayList<Staff> newTemp = new ArrayList<Staff>();
+            for (Staff s: temp) {
+                if (s.getTrainingsReceived().contains(skill)) {
+                    newTemp.add(s);
+                }
+            }
+            temp = newTemp;
+        }
+        return temp;
+    }
 }
