@@ -27,12 +27,4 @@ public class DatabaseDecorator {
     public Database getDatabase() {
         return database;
     }
-
-    public Object[][] getRequirementsDisplayMatrix() {
-        return null;
-    }
-
-    public Object[][] getStaffDisplayMatrix() {
-        return null;
-    }
 }

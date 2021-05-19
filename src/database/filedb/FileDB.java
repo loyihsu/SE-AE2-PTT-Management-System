@@ -16,7 +16,7 @@ public class FileDB implements Database {
     
     private TableFindable<Requirement> requirements = new RequirementTable();
     private TableFindable<Staff> staff = new StaffTable();
-    private TableCleanableByTypes<Assignment> assignments = new AssignmentTable();
+    private TableFilterableByTypes<Assignment> assignments = new AssignmentTable();
 
     /**
     The initialiser of the File Database.
@@ -75,7 +75,7 @@ public class FileDB implements Database {
         writer.close();        
     }
 
-    public TableCleanableByTypes<Assignment> getAssignmentTable() {
+    public TableFilterableByTypes<Assignment> getAssignmentTable() {
         return assignments;
     }
 
@@ -85,5 +85,63 @@ public class FileDB implements Database {
 
     public TableFindable<Staff> getStaffTable() {
         return staff;
+    }
+
+    public Object[][] getRequirementsDisplayMatrix() {
+        ArrayList<Requirement> temp = requirements.getTable();
+        String[][] matrix = new String[temp.size()][7];
+
+        for (int idx = 0, length = temp.size(); idx < length; idx++) {
+            matrix[idx][0] = "" + temp.get(idx).getId();
+            matrix[idx][1] = "" + temp.get(idx).getCourseId();
+            matrix[idx][2] = "" + temp.get(idx).getNumberOfStaffNeeded();
+            matrix[idx][3] = temp.get(idx).getStartDate();
+            matrix[idx][4] = temp.get(idx).getEndDate();
+
+            String trainings = "";
+            for (String item: temp.get(idx).getTrainingsNeeded()) {
+                trainings += item + " ";
+            }
+
+            matrix[idx][5] = trainings;
+
+            String assigned = "";
+
+            for (Assignment item: assignments.getAllItemsRelatedTo(temp.get(idx))) {
+                assigned += "(" + item.getStaff().getName() + " " + item.getStaff().getId() + ") ";
+            }
+            matrix[idx][6] = assigned;
+        }
+
+        return matrix;
+    }
+
+    public Object[][] getStaffDisplayMatrix() {
+        ArrayList<Staff> temp = staff.getTable();
+        String[][] matrix = new String[temp.size()][5];
+
+        for (int idx = 0, length = temp.size(); idx < length; idx++) {
+            matrix[idx][0] = "" + temp.get(idx).getId();
+            matrix[idx][1] = temp.get(idx).getName();
+            matrix[idx][2] = temp.get(idx).getDateOfJoining();
+
+            String trainings = "";
+            for (String item: temp.get(idx).getTrainingsReceived()) {
+                trainings += item + " ";
+            }
+
+            matrix[idx][3] = trainings;
+
+            String responsibility = "";
+
+            for (Assignment item: assignments.getAllItemsRelatedTo(temp.get(idx))) {
+                responsibility += "(Lab " + item.getRequirement().getId()  + ") ";
+            }
+
+            matrix[idx][4] = responsibility;
+        }
+
+
+        return matrix;
     }
 }

@@ -15,5 +15,11 @@ public interface Database {
     // ===============================================
     public TableFindable<Requirement> getRequirementTable();
     public TableFindable<Staff> getStaffTable();
-    public TableCleanableByTypes<Assignment> getAssignmentTable();
+    public TableFilterableByTypes<Assignment> getAssignmentTable();
+
+    // ===============================================
+    // Display Matrices
+    // ===============================================
+    public Object[][] getRequirementsDisplayMatrix();
+    public Object[][] getStaffDisplayMatrix();
 }
