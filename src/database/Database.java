@@ -15,5 +15,5 @@ public interface Database {
     // ===============================================
     public TableFindable<Requirement> getRequirementTable();
     public TableFindable<Staff> getStaffTable();
-    public Table<Assignment> getAssignmentTable();
+    public TableCleanableByTypes<Assignment> getAssignmentTable();
 }
