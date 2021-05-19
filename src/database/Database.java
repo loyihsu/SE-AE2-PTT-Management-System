@@ -2,7 +2,7 @@ package src.database;
 
 import java.io.IOException;
 
-import src.datatype.*;
+import src.database.types.*;
 
 /**
 The Database interface defining things all Database implementations should have.

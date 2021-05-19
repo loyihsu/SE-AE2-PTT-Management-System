@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import src.database.*;
-import src.datatype.*;
-import src.datatype.builder.*;
+import src.database.types.*;
+import src.database.types.builder.*;
 
 public class StaffTable implements TableFindable<Staff> {
     private ArrayList<Staff> table;

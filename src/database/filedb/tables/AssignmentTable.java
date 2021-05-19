@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import src.database.*;
-import src.datatype.*;
+import src.database.types.*;
 
 public class AssignmentTable implements TableCleanableByTypes<Assignment> {
     private ArrayList<Assignment> table;

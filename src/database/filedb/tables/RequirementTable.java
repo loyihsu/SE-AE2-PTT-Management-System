@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import src.database.TableFindable;
-import src.datatype.*;
-import src.datatype.builder.*;
+import src.database.types.*;
+import src.database.types.builder.*;
 
 public class RequirementTable implements TableFindable<Requirement> {
     private ArrayList<Requirement> table;

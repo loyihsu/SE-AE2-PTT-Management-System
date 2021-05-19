@@ -1,8 +1,8 @@
-package src.datatype.builder;
+package src.database.types.builder;
 
 import java.util.ArrayList;
 
-import src.datatype.Staff;
+import src.database.types.Staff;
 
 public class StaffBuilder extends Builder<Staff> {
     private int id;
