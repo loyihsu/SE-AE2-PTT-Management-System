@@ -30,7 +30,16 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
     }
 
     public void add(Assignment item) {
-        table.add(item);
+        boolean flag = true;
+        for (Assignment existingItem: table) {
+            if (existingItem.equals(item)) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            table.add(item);
+        }
     }
 
     public void remove(Assignment item) {
