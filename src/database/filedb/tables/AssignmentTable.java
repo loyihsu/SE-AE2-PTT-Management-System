@@ -6,7 +6,7 @@ import java.util.Scanner;
 import src.database.*;
 import src.database.types.*;
 
-public class AssignmentTable implements TableCleanableByTypes<Assignment> {
+public class AssignmentTable implements TableFilterableByTypes<Assignment> {
     private ArrayList<Assignment> table;
 
     public AssignmentTable() {
@@ -37,6 +37,33 @@ public class AssignmentTable implements TableCleanableByTypes<Assignment> {
         table.remove(item);
     }
 
+    public ArrayList<Assignment> getAllItemsRelatedTo(Staff staff) {
+        ArrayList<Assignment> temp = new ArrayList<Assignment>();
+        for (Assignment item: table) {
+            if (item.getStaff().equals(staff)) {
+                temp.add(item);
+            }
+        }
+        return temp;
+    }
+
+    public ArrayList<Assignment> getAllItemsRelatedTo(Requirement requirement) {
+        ArrayList<Assignment> temp = new ArrayList<Assignment>();
+        for (Assignment item: table) {
+            if (item.getRequirement().equals(requirement)) {
+                temp.add(item);
+            }
+        }
+        return temp;
+    }
+
+    public ArrayList<Assignment> getAllItemsRelatedTo(Assignment assignment) {
+        ArrayList<Assignment> temp = new ArrayList<Assignment>();
+        temp.add(assignment);
+        return temp;
+    }
+
+
     public void cleanAllItemsRelatedTo(Staff staff) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
 
@@ -64,7 +91,6 @@ public class AssignmentTable implements TableCleanableByTypes<Assignment> {
 
         table = temp;
     }
-
 
     public String toString() {
         String output = "";
