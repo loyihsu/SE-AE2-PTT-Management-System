@@ -9,10 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AddRequirementFrame extends JFrame {
-    JLabelAndField staffNumber, startDate, endDate, skill;
-    JLabelAndComboBox coursePicker;
+    JLabelAndField course, staffNumber, startDate, endDate, skill;
     JButton sendButton;
     public AddRequirementFrame(ActionListener listener) {
         setSize(300, 200);
@@ -20,9 +20,7 @@ public class AddRequirementFrame extends JFrame {
 
         JPanel contentPanel = new JPanel();
 
-        // TODO
-        coursePicker = new JLabelAndComboBox("Course", new ArrayList<String>());
-
+        course = new JLabelAndField("Course");
         staffNumber = new JLabelAndField("# of Staff Needed");
         startDate = new JLabelAndField("Start Date");
         endDate = new JLabelAndField("End Date");
@@ -32,7 +30,7 @@ public class AddRequirementFrame extends JFrame {
         sendButton.addActionListener(listener);
 
         contentPanel.setLayout(new GridLayout(0,1));
-        contentPanel.add(coursePicker);
+        contentPanel.add(course);
         contentPanel.add(staffNumber);
         contentPanel.add(startDate);
         contentPanel.add(endDate);
@@ -52,20 +50,20 @@ public class AddRequirementFrame extends JFrame {
 
         return builder
                 .setId(id)
-                .setCourseId(courseIdSelector(coursePicker.getUserInput()))
+                .setCourseId(Integer.parseInt(course.getUserInput()))
                 .setStartDate(startDate.getUserInput())
                 .setEndDate(endDate.getUserInput())
+                .setNumberOfStaffNeeded(Integer.parseInt(staffNumber.getUserInput()))
                 .setTrainingsNeeded(parseTrainings(skill.getUserInput()))
                 .build();
     }
 
-    // TODO: Implement this
-    private int courseIdSelector(Object input) {
-        return 0;
-    }
-
-    // TODO: Implement this
     private ArrayList<String> parseTrainings(String input) {
-        return new ArrayList<String>();
+        ArrayList<String> output = new ArrayList<String>();
+        Scanner scanner = new Scanner(input);
+        while (scanner.hasNext()) {
+            output.add(scanner.next());
+        }
+        return output;
     }
 }
