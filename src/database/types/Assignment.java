@@ -9,6 +9,13 @@ public class Assignment {
         this.requirement = requirement;
     }
 
+    public boolean equals(Object another) {
+        if (another instanceof Assignment) {
+            return (toString().equals(toString()));
+        }
+        return false;
+    }
+
     public String toString() {
         return staff.getId() + "," + requirement.getId();
     }
