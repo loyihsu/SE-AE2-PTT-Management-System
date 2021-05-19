@@ -1,20 +1,26 @@
 package src.view;
 
-import src.database.DatabaseDecorator;
+import src.database.Database;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class TabContentPanel extends JPanel {
-    JScrollPane tableScrollPane;
     JButton topButton, middleButton, lowerButton;
+    JTable table;
+    DefaultTableModel tableModel;
+    TableSelector selector;
+    Database database;
 
-    public TabContentPanel(ActionListener listener, TableSelector tableSelector, DatabaseDecorator databaseDecorator, String topButtonLabel, String middleButtonLabel, String lowButtonLabel) {
+    public TabContentPanel(ActionListener listener, TableSelector tableSelector, Database database, String topButtonLabel, String middleButtonLabel, String lowButtonLabel) {
         this.setLayout(new BorderLayout());
+        this.selector = tableSelector;
+        this.database = database;
 
-        drawTable(databaseDecorator, tableSelector);
-        this.add(tableScrollPane, BorderLayout.CENTER);
+        drawTable();
 
         JPanel controlPanel = new JPanel();
 
@@ -35,22 +41,51 @@ public class TabContentPanel extends JPanel {
         this.add(controlPanel, BorderLayout.EAST);
     }
 
-    public void drawTable(DatabaseDecorator databaseDecorator, TableSelector tableSelector) {
+    private void drawTable() {
         String[] columns;
-        if (tableSelector == TableSelector.REQUIREMENT) {
+        if (selector == TableSelector.REQUIREMENT) {
             String[] columnNames = {"Lab ID", "Course ID", "Number of Staff Needed", "Start Date", "End Date", "Trainings Needed", "Assigned Staff"};
             columns = columnNames;
         } else {
             String[] columnNames = {"Staff ID", "Name", "Date of Joining", "Trainings Received", "Responsible for Labs"};
             columns = columnNames;
         }
+        Object[][] matrixData = (selector == TableSelector.REQUIREMENT) ? database.getRequirementsDisplayMatrix() : database.getStaffDisplayMatrix();
 
-        Object[][] matrixData = {{"1", "1", "1", "1", "1", "1", "1"}};
-//        Object[][] matrixData = (tableSelector == TableSelector.REQUIREMENT) ? databaseDecorator.getRequirementsDisplayMatrix() : databaseDecorator.getStaffDisplayMatrix();
+        tableModel = new DefaultTableModel(matrixData, columns) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
-        JTable table = new JTable(matrixData, columns);
+        JScrollPane tableScrollPane;
+        table = new JTable(tableModel);
+        table.setModel(tableModel);
         tableScrollPane = new JScrollPane(table);
         table.setFillsViewportHeight(true);
+
+        this.add(tableScrollPane, BorderLayout.CENTER);
+    }
+
+    public void refreshTable() {
+        String[] columns;
+        if (selector == TableSelector.REQUIREMENT) {
+            String[] columnNames = {"Lab ID", "Course ID", "Number of Staff Needed", "Start Date", "End Date", "Trainings Needed", "Assigned Staff"};
+            columns = columnNames;
+        } else {
+            String[] columnNames = {"Staff ID", "Name", "Date of Joining", "Trainings Received", "Responsible for Labs"};
+            columns = columnNames;
+        }
+        Object[][] matrixData = (selector == TableSelector.REQUIREMENT) ? database.getRequirementsDisplayMatrix() : database.getStaffDisplayMatrix();
+
+        tableModel = new DefaultTableModel(matrixData, columns) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        table.setModel(tableModel);
+        table.repaint();
     }
 
     public JButton getTopButton() {

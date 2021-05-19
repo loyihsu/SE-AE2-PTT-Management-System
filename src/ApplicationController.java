@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import src.view.*;
 import src.database.*;
 import src.database.filedb.*;
 import src.view.ApplicationView;
@@ -21,7 +20,7 @@ public class ApplicationController implements ActionListener {
 
     public ApplicationController(DatabaseDecorator database) {
         this.database = database;
-        this.view = new ApplicationView(this, database);
+        this.view = new ApplicationView(this, database.getDatabase());
     }
 
     public DatabaseDecorator getDatabase() {
@@ -55,6 +54,9 @@ public class ApplicationController implements ActionListener {
             // Remove Requirement
 
         }
+
+        // To redraw the table
+        // view.get...Panel().refreshTable();
     }
 
     private void setPopupAndSetVisible(JFrame view) {
@@ -73,6 +75,6 @@ public class ApplicationController implements ActionListener {
         JFrame gui = controller.getView();
         gui.setVisible(true);
 
-        database.write();
+//        database.write();
     }
 }

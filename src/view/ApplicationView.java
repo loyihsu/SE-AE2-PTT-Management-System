@@ -6,13 +6,13 @@ import src.database.*;
 import javax.swing.*;
 
 public class ApplicationView extends JFrame {
-    private DatabaseDecorator database;
+    private Database database;
     private ApplicationController controller;
     private JTabbedPane tabbedPane;
 
     TabContentPanel requirementPanel, staffPanel;
 
-    public ApplicationView(ApplicationController controller, DatabaseDecorator database) {
+    public ApplicationView(ApplicationController controller, Database database) {
         this.database = database;
         this.controller = controller;
 
