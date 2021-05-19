@@ -13,4 +13,7 @@ public class JLabelAndBox extends JComponent {
         this.add(label);
         this.add(box);
     }
+    public Object getUserInput() {
+        return box.getSelectedItem();
+    }
 }

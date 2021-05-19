@@ -37,22 +37,56 @@ public class ApplicationController implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == view.getStaffPanel().getTopButton()) {
             // Add New Staff
-            setPopupAndSetVisible(new AddStaffFrame());
+            setPopupAndSetVisible(new AddStaffFrame(this));
         } else if (event.getSource() == view.getStaffPanel().getMiddleButton()) {
             // Train Staff
-            setPopupAndSetVisible(new TrainStaffFrame());
+            setPopupAndSetVisible(new TrainStaffFrame(this));
         } else if (event.getSource() == view.getStaffPanel().getLowerButton()) {
             // Remove Staff
 
         } else if (event.getSource() == view.getRequirementPanel().getTopButton()) {
             // Add New Requirement
-            setPopupAndSetVisible(new AddRequirementFrame());
+            setPopupAndSetVisible(new AddRequirementFrame(this));
         } else if (event.getSource() == view.getRequirementPanel().getMiddleButton()) {
             // Assign Staff to Lab
-            setPopupAndSetVisible(new AssignStaffFrame());
+            setPopupAndSetVisible(new AssignStaffFrame(this));
         } else if (event.getSource() == view.getRequirementPanel().getLowerButton()) {
             // Remove Requirement
 
+        } else if (popup instanceof AddRequirementFrame) {
+            AddRequirementFrame current = (AddRequirementFrame) popup;
+            if (event.getSource() == current.getSendButton()) {
+                int id = database.getDatabase().getRequirementTable().getTable().size()+1;
+                database.getDatabase().getRequirementTable().add(current.getUserInput(id));
+                view.getRequirementPanel().refreshTable();
+                popup.setVisible(false);
+                popup = null;
+            }
+        } else if (popup instanceof AssignStaffFrame) {
+            AssignStaffFrame current = (AssignStaffFrame) popup;
+            if (event.getSource() == current.getSendButton()) {
+                current.getUserInput(database.getDatabase());
+                view.getRequirementPanel().refreshTable();
+                view.getStaffPanel().refreshTable();
+                popup.setVisible(false);
+                popup = null;
+            }
+        } else if (popup instanceof AddStaffFrame) {
+            AddStaffFrame current = (AddStaffFrame) popup;
+            if (event.getSource() == current.getSendButton()) {
+                int id = database.getDatabase().getStaffTable().getTable().size()+1;
+                database.getDatabase().getStaffTable().add(current.getUserInput(id));
+                view.getStaffPanel().refreshTable();
+                popup.setVisible(false);
+                popup = null;
+            }
+        } else if (popup instanceof TrainStaffFrame) {
+            TrainStaffFrame current = (TrainStaffFrame) popup;
+            if (event.getSource() == current.getSendButton()) {
+                current.trainStaff(database.getDatabase());
+                popup.setVisible(false);
+                popup = null;
+            }
         }
 
         // To redraw the table
