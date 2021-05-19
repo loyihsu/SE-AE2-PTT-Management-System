@@ -30,7 +30,7 @@ public class TrainStaffFrame extends JFrame {
 
         nameList = database.getStaffTable().getTable();
 
-        namePicker = new JLabelAndComboBox("Name", generateSelections(nameList));
+        namePicker = new JLabelAndComboBox("Name", generateSelections(nameList), null);
         skill = new JLabelAndField("Skill to add");
 
         sendButton = new JButton("Train");

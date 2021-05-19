@@ -1,15 +1,14 @@
 package src.view.components;
 
-import src.database.types.Staff;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class JLabelAndComboBox extends JComponent {
     JLabel label;
     JComboBox box;
-    public JLabelAndComboBox(String string, ArrayList<String> selections) {
+    public JLabelAndComboBox(String string, ArrayList<String> selections, ActionListener listener) {
         this.setLayout(new GridLayout(0, 2));
         label = new JLabel(string);
         box = new JComboBox();
@@ -19,8 +18,17 @@ public class JLabelAndComboBox extends JComponent {
 
         this.add(label);
         this.add(box);
+
+        box.addActionListener(listener);
     }
+
     public int getUserInput() {
         return box.getSelectedIndex();
+    }
+
+    public void changeSelections(String[] selections) {
+        System.out.println(selections);
+        box.setModel(new DefaultComboBoxModel(selections));
+        box.repaint();
     }
 }

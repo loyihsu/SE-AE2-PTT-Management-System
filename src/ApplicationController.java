@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 
 import src.database.*;
 import src.database.filedb.*;
-import src.view.ApplicationView;
+import src.view.*;
 import src.view.requirement.*;
 import src.view.staff.*;
 
@@ -49,7 +49,7 @@ public class ApplicationController implements ActionListener {
             setPopupAndSetVisible(new AddRequirementFrame(this));
         } else if (event.getSource() == view.getRequirementPanel().getMiddleButton()) {
             // Assign Staff to Lab
-            setPopupAndSetVisible(new AssignStaffFrame(this));
+            setPopupAndSetVisible(new AssignStaffFrame(this, database.getDatabase()));
         } else if (event.getSource() == view.getRequirementPanel().getLowerButton()) {
             // Remove Requirement
 
@@ -65,7 +65,7 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof AssignStaffFrame) {
             AssignStaffFrame current = (AssignStaffFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                current.getUserInput(database.getDatabase());
+                database.getDatabase().getAssignmentTable().add(current.getUserInput(database.getDatabase()));
                 view.getRequirementPanel().refreshTable();
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
@@ -89,9 +89,6 @@ public class ApplicationController implements ActionListener {
                 popup = null;
             }
         }
-
-        // To redraw the table
-        // view.get...Panel().refreshTable();
     }
 
     private void setPopupAndSetVisible(JFrame view) {

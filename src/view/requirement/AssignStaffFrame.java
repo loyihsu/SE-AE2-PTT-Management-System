@@ -6,21 +6,45 @@ import src.view.components.JLabelAndComboBox;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AssignStaffFrame extends JFrame {
     JLabelAndComboBox lab, staff;
     JButton sendButton;
+    Database database;
+    ArrayList<Requirement> requirements;
+    ArrayList<Staff> qualifiedStaff;
 
-    public AssignStaffFrame(ActionListener listener) {
+    public AssignStaffFrame(ActionListener listener, Database database) {
         setSize(300, 200);
         setTitle("Assign Staff");
 
+        this.database = database;
 
-        // TODO
-        lab = new JLabelAndComboBox("Lab ID", new ArrayList<String>());
-        staff = new JLabelAndComboBox("Staff", new ArrayList<String>());
+        requirements = database.getRequirementTable().getTable();
+
+        ActionListener selectionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Requirement item = requirements.get(lab.getUserInput());
+                ArrayList<String> trainingsNeeded = item.getTrainingsNeeded();
+                qualifiedStaff = database.getStaffTable().findWithSkills(trainingsNeeded);
+                staff.changeSelections(convertToArray(generateStaffSelections(qualifiedStaff)));
+            }
+
+            private String[] convertToArray(ArrayList<String> input) {
+                String[] output = new String[input.size()];
+                for (int idx = 0, length = input.size(); idx < length; idx++) {
+                    output[idx] = input.get(idx);
+                }
+                return output;
+            }
+        };
+
+        lab = new JLabelAndComboBox("Lab", generateRequirementSelections(requirements), selectionListener);
+
+        staff = setupStaffAccordingToLab();
 
         sendButton = new JButton("Assign");
         sendButton.addActionListener(listener);
@@ -35,27 +59,41 @@ public class AssignStaffFrame extends JFrame {
         this.add(sendButton, BorderLayout.SOUTH);
     }
 
+    private JLabelAndComboBox setupStaffAccordingToLab() {
+        Requirement item = requirements.get(lab.getUserInput());
+        ArrayList<String> trainingsNeeded = item.getTrainingsNeeded();
+        qualifiedStaff = database.getStaffTable().findWithSkills(trainingsNeeded);
+        return new JLabelAndComboBox("Staff", generateStaffSelections(qualifiedStaff), null);
+    }
+
+    private ArrayList<String> generateStaffSelections(ArrayList<Staff> qualifiedStaff) {
+        ArrayList<String> output = new ArrayList<String>();
+
+        for (Staff staff: qualifiedStaff) {
+            output.add("(" + staff.getId() + ", " + staff.getName() + ")");
+        }
+
+        return output;
+    }
+
+    private ArrayList<String> generateRequirementSelections(ArrayList<Requirement> requirements) {
+        // TODO: Remove all the requirements that have enough people.
+        ArrayList<String> output = new ArrayList<String>();
+
+        for (Requirement item: requirements) {
+            output.add("(Lab " + item.getId() + ")");
+        }
+
+        return output;
+    }
+
     public JButton getSendButton() {
         return sendButton;
     }
 
     public Assignment getUserInput(Database database) {
-        int sid = extractSid(staff.getUserInput());
-        int rid = extractRid(lab.getUserInput());
-
-        Staff staff = database.getStaffTable().find(sid);
-        Requirement requirement = database.getRequirementTable().find(rid);
-
+        Staff staff = qualifiedStaff.get(this.staff.getUserInput());
+        Requirement requirement = requirements.get(lab.getUserInput());
         return new Assignment(staff, requirement);
-    }
-
-    // TODO: Implement this
-    private int extractSid(Object input) {
-        return 1;
-    }
-
-    // TODO: Implement this
-    private int extractRid(Object input) {
-        return 1;
     }
 }
