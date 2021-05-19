@@ -9,6 +9,9 @@ public class DatabaseDecorator {
         this.database = database;
     }
 
+    // ===============================================
+    // Cleaner methods
+    // ===============================================
     public void cleanlyRemoveStaff(Staff staff) {
         database.getStaffTable().remove(staff);
         database.getAssignmentTable().cleanAllInstancesRelatedTo(staff);
@@ -18,7 +21,9 @@ public class DatabaseDecorator {
         database.getRequirementTable().remove(requirement);
         database.getAssignmentTable().cleanAllInstancesRelatedTo(requirement);
     }
-
+    // ===============================================
+    // Getter
+    // ===============================================
     public Database getDatabase() {
         return database;
     }

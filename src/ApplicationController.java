@@ -15,15 +15,15 @@ import src.view.staff.*;
 import javax.swing.*;
 
 public class ApplicationController implements ActionListener {
-    private Database database;
+    private DatabaseDecorator database;
     private ApplicationView view;
 
-    public ApplicationController(Database database) {
+    public ApplicationController(DatabaseDecorator database) {
         this.database = database;
-        this.view = new ApplicationView(this, database);
+        this.view = new ApplicationView(this, database.getDatabase());
     }
 
-    public Database getDatabase() {
+    public DatabaseDecorator getDatabase() {
         return database;
     }
 
@@ -42,7 +42,7 @@ public class ApplicationController implements ActionListener {
         // This code dynamically find the file.txt file in the database/filedb folder and create a Database object from it.
         String filepath = new File("./src/database/filedb/file.txt").getAbsolutePath();
         Database database = new FileDB(filepath);
-        ApplicationController controller = new ApplicationController(database);
+        ApplicationController controller = new ApplicationController(new DatabaseDecorator(database));
 
 //        JFrame gui = controller.getView();
 //        gui.setVisible(true);
