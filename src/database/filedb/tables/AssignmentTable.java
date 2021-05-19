@@ -37,7 +37,7 @@ public class AssignmentTable implements TableCleanableByTypes<Assignment> {
         table.remove(item);
     }
 
-    public void cleanAllInstancesRelatedTo(Staff staff) {
+    public void cleanAllItemsRelatedTo(Staff staff) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
 
         for (Assignment assignment: table) {
@@ -49,11 +49,11 @@ public class AssignmentTable implements TableCleanableByTypes<Assignment> {
         table = temp;
     }
 
-    public void cleanAllInstancesRelatedTo(Assignment assignment) {
+    public void cleanAllItemsRelatedTo(Assignment assignment) {
         this.remove(assignment);
     }
 
-    public void cleanAllInstancesRelatedTo(Requirement requirement) {
+    public void cleanAllItemsRelatedTo(Requirement requirement) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
 
         for (Assignment assignment: table) {

@@ -14,12 +14,12 @@ public class DatabaseDecorator {
     // ===============================================
     public void cleanlyRemoveStaff(Staff staff) {
         database.getStaffTable().remove(staff);
-        database.getAssignmentTable().cleanAllInstancesRelatedTo(staff);
+        database.getAssignmentTable().cleanAllItemsRelatedTo(staff);
     }
 
     public void cleanlyRemoveRequirement(Requirement requirement) {
         database.getRequirementTable().remove(requirement);
-        database.getAssignmentTable().cleanAllInstancesRelatedTo(requirement);
+        database.getAssignmentTable().cleanAllItemsRelatedTo(requirement);
     }
     // ===============================================
     // Getter
