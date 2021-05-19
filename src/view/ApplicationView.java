@@ -2,8 +2,6 @@ package src.view;
 
 import src.ApplicationController;
 import src.database.*;
-import src.view.requirement.RequirementPanel;
-import src.view.staff.StaffPanel;
 
 import javax.swing.*;
 
@@ -11,31 +9,33 @@ public class ApplicationView extends JFrame {
     private Database database;
     private ApplicationController controller;
     private JTabbedPane tabbedPane;
-    RequirementPanel requirementPanel;
-    StaffPanel staffPanel;
 
-    public ApplicationView(ApplicationController c, Database db) {
-        database = db;
-        controller = c;
+    TabContentPanel requirementPanel, staffPanel;
+
+    public ApplicationView(ApplicationController controller, Database database) {
+        this.database = database;
+        this.controller = controller;
 
         setSize(640, 480);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Application");
 
         tabbedPane = new JTabbedPane();
-        requirementPanel = new RequirementPanel(c);
+
+        requirementPanel = new TabContentPanel(controller, "Add New Lab", "Assign Staff to Lab", "Remove Lab");
         tabbedPane.addTab("Labs", requirementPanel);
-        staffPanel = new StaffPanel(c);
+
+        staffPanel = new TabContentPanel(controller, "Add New Staff", "Train Staff", "Remove Staff");
         tabbedPane.addTab("Staff", staffPanel);
 
         this.add(tabbedPane);
     }
 
-    public RequirementPanel getRequirementPanel() {
+    public TabContentPanel getRequirementPanel() {
         return requirementPanel;
     }
 
-    public StaffPanel getStaffPanel() {
+    public TabContentPanel getStaffPanel() {
         return staffPanel;
     }
 }
