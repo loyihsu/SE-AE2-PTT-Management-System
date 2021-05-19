@@ -11,7 +11,7 @@ public class Assignment {
 
     public boolean equals(Object another) {
         if (another instanceof Assignment) {
-            return (toString().equals(toString()));
+            return (toString().equals(another.toString()));
         }
         return false;
     }

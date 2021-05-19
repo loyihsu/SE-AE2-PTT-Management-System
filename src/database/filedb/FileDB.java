@@ -108,7 +108,7 @@ public class FileDB implements Database {
             String assigned = "";
 
             for (Assignment item: assignments.getAllItemsRelatedTo(temp.get(idx))) {
-                assigned += "(" + item.getStaff().getName() + " " + item.getStaff().getId() + ") ";
+                assigned += "(" + item.getStaff().getId() + ", " + item.getStaff().getName() + ") ";
             }
             matrix[idx][6] = assigned;
         }

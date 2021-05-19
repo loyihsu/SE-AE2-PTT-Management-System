@@ -10,6 +10,7 @@ import src.database.filedb.*;
 import src.view.*;
 import src.view.requirement.*;
 import src.view.staff.*;
+import src.database.types.*;
 
 import javax.swing.*;
 
@@ -43,7 +44,23 @@ public class ApplicationController implements ActionListener {
             setPopupAndSetVisible(new TrainStaffFrame(this, database.getDatabase()));
         } else if (event.getSource() == view.getStaffPanel().getLowerButton()) {
             // Remove Staff
-
+            String result = JOptionPane.showInputDialog(null, "Which staff (id) would you like to remove?");
+            try {
+                int id = Integer.parseInt(result);
+                Staff staff = database.getDatabase().getStaffTable().find(id);
+                if (staff == null) {
+                    JOptionPane.showMessageDialog(null, "Invalid input: Staff doesn't exist.","Operation Failed", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove ("+ id + ","+ staff.getName() + ")");
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        database.cleanlyRemoveStaff(staff);
+                        view.getStaffPanel().refreshTable();
+                        view.getRequirementPanel().refreshTable();
+                    }
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid input.","Operation Failed", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (event.getSource() == view.getRequirementPanel().getTopButton()) {
             // Add New Requirement
             setPopupAndSetVisible(new AddRequirementFrame(this));
@@ -52,7 +69,23 @@ public class ApplicationController implements ActionListener {
             setPopupAndSetVisible(new AssignStaffFrame(this, database));
         } else if (event.getSource() == view.getRequirementPanel().getLowerButton()) {
             // Remove Requirement
-
+            String result = JOptionPane.showInputDialog(null, "Which lab (id) would you like to remove?");
+            try {
+                int id = Integer.parseInt(result);
+                Requirement requirement = database.getDatabase().getRequirementTable().find(id);
+                if (requirement == null) {
+                    JOptionPane.showMessageDialog(null, "Invalid input: Lab doesn't exist.","Operation Failed", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove (Lab "+ id  +")");
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        database.cleanlyRemoveRequirement(requirement);
+                        view.getStaffPanel().refreshTable();
+                        view.getRequirementPanel().refreshTable();
+                    }
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid input.","Operation Failed", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (popup instanceof AddRequirementFrame) {
             AddRequirementFrame current = (AddRequirementFrame) popup;
             if (event.getSource() == current.getSendButton()) {
