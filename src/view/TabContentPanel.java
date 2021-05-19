@@ -10,10 +10,10 @@ public class TabContentPanel extends JPanel {
     JScrollPane tableScrollPane;
     JButton topButton, middleButton, lowerButton;
 
-    public TabContentPanel(ActionListener listener, String mode, DatabaseDecorator databaseDecorator, String topButtonLabel, String middleButtonLabel, String lowButtonLabel) {
+    public TabContentPanel(ActionListener listener, TableSelector tableSelector, DatabaseDecorator databaseDecorator, String topButtonLabel, String middleButtonLabel, String lowButtonLabel) {
         this.setLayout(new BorderLayout());
 
-        drawTable(databaseDecorator, mode);
+        drawTable(databaseDecorator, tableSelector);
         this.add(tableScrollPane, BorderLayout.CENTER);
 
         JPanel controlPanel = new JPanel();
@@ -35,9 +35,9 @@ public class TabContentPanel extends JPanel {
         this.add(controlPanel, BorderLayout.EAST);
     }
 
-    public void drawTable(DatabaseDecorator databaseDecorator, String mode) {
+    public void drawTable(DatabaseDecorator databaseDecorator, TableSelector tableSelector) {
         String[] columns;
-        if (mode.equals("R")) {
+        if (tableSelector == TableSelector.REQUIREMENT) {
             String[] columnNames = {"Lab ID", "Course ID", "Number of Staff Needed", "Start Date", "End Date", "Trainings Needed", "Assigned Staff"};
             columns = columnNames;
         } else {
@@ -46,7 +46,7 @@ public class TabContentPanel extends JPanel {
         }
 
         Object[][] matrixData = {{"1", "1", "1", "1", "1", "1", "1"}};
-//        Object[][] matrixData = (mode == "R") ? databaseDecorator.getRequirementsDisplayMatrix() : databaseDecorator.getStaffDisplayMatrix();
+//        Object[][] matrixData = (tableSelector == TableSelector.REQUIREMENT) ? databaseDecorator.getRequirementsDisplayMatrix() : databaseDecorator.getStaffDisplayMatrix();
 
         JTable table = new JTable(matrixData, columns);
         tableScrollPane = new JScrollPane(table);

@@ -22,10 +22,10 @@ public class ApplicationView extends JFrame {
 
         tabbedPane = new JTabbedPane();
 
-        requirementPanel = new TabContentPanel(controller, "R", database, "Add New Lab", "Assign Staff to Lab", "Remove Lab");
+        requirementPanel = new TabContentPanel(controller, TableSelector.REQUIREMENT, database, "Add New Lab", "Assign Staff to Lab", "Remove Lab");
         tabbedPane.addTab("Labs", requirementPanel);
 
-        staffPanel = new TabContentPanel(controller, "S", database, "Add New Staff", "Train Staff", "Remove Staff");
+        staffPanel = new TabContentPanel(controller, TableSelector.STAFF, database, "Add New Staff", "Train Staff", "Remove Staff");
         tabbedPane.addTab("Staff", staffPanel);
 
         this.add(tabbedPane);
