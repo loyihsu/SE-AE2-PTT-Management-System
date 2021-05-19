@@ -2,7 +2,7 @@ package src.view.requirement;
 
 import src.database.types.Requirement;
 import src.database.types.builder.RequirementBuilder;
-import src.view.components.JLabelAndBox;
+import src.view.components.JLabelAndComboBox;
 import src.view.components.JLabelAndField;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class AddRequirementFrame extends JFrame {
     JLabelAndField staffNumber, startDate, endDate, skill;
-    JLabelAndBox coursePicker;
+    JLabelAndComboBox coursePicker;
     JButton sendButton;
     public AddRequirementFrame(ActionListener listener) {
         setSize(300, 200);
@@ -20,7 +20,8 @@ public class AddRequirementFrame extends JFrame {
 
         JPanel contentPanel = new JPanel();
 
-        coursePicker = new JLabelAndBox("Course");
+        // TODO
+        coursePicker = new JLabelAndComboBox("Course", new ArrayList<String>());
 
         staffNumber = new JLabelAndField("# of Staff Needed");
         startDate = new JLabelAndField("Start Date");

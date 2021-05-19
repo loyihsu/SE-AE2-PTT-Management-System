@@ -3,26 +3,34 @@ package src.view.staff;
 import src.database.Database;
 
 import src.database.types.Staff;
-import src.view.components.JLabelAndBox;
+import src.view.components.JLabelAndComboBox;
 import src.view.components.JLabelAndField;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TrainStaffFrame extends JFrame {
     JLabelAndField skill;
-    JLabelAndBox namePicker;
+    JLabelAndComboBox namePicker;
     JButton sendButton;
+    ArrayList<Staff> nameList;
 
-    public TrainStaffFrame(ActionListener listener) {
+    Database database;
+
+    public TrainStaffFrame(ActionListener listener, Database database) {
         setSize(300, 200);
         setTitle("Train Staff");
 
+        this.database = database;
+
         JPanel contentPanel = new JPanel();
 
-        namePicker = new JLabelAndBox("Name");
+        nameList = database.getStaffTable().getTable();
+
+        namePicker = new JLabelAndComboBox("Name", generateSelections(nameList));
         skill = new JLabelAndField("Skill to add");
 
         sendButton = new JButton("Train");
@@ -37,26 +45,33 @@ public class TrainStaffFrame extends JFrame {
         this.add(sendButton, BorderLayout.SOUTH);
     }
 
+    private ArrayList<String> generateSelections(ArrayList<Staff> input) {
+        ArrayList<String> output = new ArrayList<String>();
+
+        for (Staff item: input) {
+            output.add("(" + item.getId() + ", " + item.getName() + ")");
+        }
+
+        return output;
+    }
+
     public JButton getSendButton() {
         return sendButton;
     }
 
     public void trainStaff(Database database) {
-        int sid = selectStaffId(namePicker.getUserInput());
-        Staff staff = database.getStaffTable().find(sid);
-
+        Staff staff = nameList.get(namePicker.getUserInput());
         for (String training: parseTrainings(skill.getUserInput())) {
             staff.addTrainingReceived(training);
         }
     }
 
-    // TODO: Implement this
-    private int selectStaffId(Object input) {
-        return 1;
-    }
-
-    // TODO: Implement this
     private ArrayList<String> parseTrainings(String input) {
-        return new ArrayList<String>();
+        ArrayList<String> output = new ArrayList<String>();
+        Scanner scanner = new Scanner(input);
+        while (scanner.hasNext()) {
+            output.add(scanner.next());
+        }
+        return output;
     }
 }

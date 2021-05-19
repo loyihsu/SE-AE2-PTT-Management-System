@@ -40,7 +40,7 @@ public class ApplicationController implements ActionListener {
             setPopupAndSetVisible(new AddStaffFrame(this));
         } else if (event.getSource() == view.getStaffPanel().getMiddleButton()) {
             // Train Staff
-            setPopupAndSetVisible(new TrainStaffFrame(this));
+            setPopupAndSetVisible(new TrainStaffFrame(this, database.getDatabase()));
         } else if (event.getSource() == view.getStaffPanel().getLowerButton()) {
             // Remove Staff
 
@@ -84,6 +84,7 @@ public class ApplicationController implements ActionListener {
             TrainStaffFrame current = (TrainStaffFrame) popup;
             if (event.getSource() == current.getSendButton()) {
                 current.trainStaff(database.getDatabase());
+                view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
                 popup = null;
             }

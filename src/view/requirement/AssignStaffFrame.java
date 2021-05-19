@@ -2,22 +2,25 @@ package src.view.requirement;
 
 import src.database.Database;
 import src.database.types.*;
-import src.view.components.JLabelAndBox;
+import src.view.components.JLabelAndComboBox;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class AssignStaffFrame extends JFrame {
-    JLabelAndBox lab, staff;
+    JLabelAndComboBox lab, staff;
     JButton sendButton;
 
     public AssignStaffFrame(ActionListener listener) {
         setSize(300, 200);
         setTitle("Assign Staff");
 
-        lab = new JLabelAndBox("Lab ID");
-        staff = new JLabelAndBox("Staff");
+
+        // TODO
+        lab = new JLabelAndComboBox("Lab ID", new ArrayList<String>());
+        staff = new JLabelAndComboBox("Staff", new ArrayList<String>());
 
         sendButton = new JButton("Assign");
         sendButton.addActionListener(listener);
