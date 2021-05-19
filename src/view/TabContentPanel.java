@@ -1,17 +1,10 @@
 package src.view;
 
 import src.database.DatabaseDecorator;
-import src.database.TableCleanableByTypes;
-import src.database.TableFindable;
-import src.database.filedb.tables.RequirementTable;
-import src.database.types.Assignment;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class TabContentPanel extends JPanel {
     JScrollPane tableScrollPane;
