@@ -1,6 +1,6 @@
 package src.view.requirement;
 
-import src.database.Database;
+import src.database.*;
 import src.database.types.*;
 import src.view.components.JLabelAndComboBox;
 
@@ -14,14 +14,16 @@ public class AssignStaffFrame extends JFrame {
     JLabelAndComboBox lab, staff;
     JButton sendButton;
     Database database;
+    DatabaseDecorator decorator;
     ArrayList<Requirement> requirements;
     ArrayList<Staff> qualifiedStaff;
 
-    public AssignStaffFrame(ActionListener listener, Database database) {
+    public AssignStaffFrame(ActionListener listener, DatabaseDecorator decorator) {
         setSize(300, 200);
         setTitle("Assign Staff");
 
-        this.database = database;
+        this.database = decorator.getDatabase();
+        this.decorator = decorator;
 
         requirements = database.getRequirementTable().getTable();
 
@@ -42,7 +44,7 @@ public class AssignStaffFrame extends JFrame {
             }
         };
 
-        lab = new JLabelAndComboBox("Lab", generateRequirementSelections(requirements), selectionListener);
+        lab = new JLabelAndComboBox("Lab", generateRequirementSelections(), selectionListener);
 
         staff = setupStaffAccordingToLab();
 
@@ -76,8 +78,8 @@ public class AssignStaffFrame extends JFrame {
         return output;
     }
 
-    private ArrayList<String> generateRequirementSelections(ArrayList<Requirement> requirements) {
-        // TODO: Remove all the requirements that have enough people.
+    private ArrayList<String> generateRequirementSelections() {
+        requirements = decorator.getRequirementsWithoutEnoughPeople();
         ArrayList<String> output = new ArrayList<String>();
 
         for (Requirement item: requirements) {

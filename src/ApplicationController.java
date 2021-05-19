@@ -49,7 +49,7 @@ public class ApplicationController implements ActionListener {
             setPopupAndSetVisible(new AddRequirementFrame(this));
         } else if (event.getSource() == view.getRequirementPanel().getMiddleButton()) {
             // Assign Staff to Lab
-            setPopupAndSetVisible(new AssignStaffFrame(this, database.getDatabase()));
+            setPopupAndSetVisible(new AssignStaffFrame(this, database));
         } else if (event.getSource() == view.getRequirementPanel().getLowerButton()) {
             // Remove Requirement
 

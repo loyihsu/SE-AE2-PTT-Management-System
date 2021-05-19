@@ -2,6 +2,8 @@ package src.database;
 
 import src.database.types.*;
 
+import java.util.ArrayList;
+
 public class DatabaseDecorator {
     private Database database;
 
@@ -21,10 +23,24 @@ public class DatabaseDecorator {
         database.getRequirementTable().remove(requirement);
         database.getAssignmentTable().cleanAllItemsRelatedTo(requirement);
     }
+
     // ===============================================
     // Getter
     // ===============================================
     public Database getDatabase() {
         return database;
+    }
+
+    public ArrayList<Requirement> getRequirementsWithoutEnoughPeople() {
+        ArrayList<Requirement> items = new ArrayList<Requirement>();
+
+        for (Requirement item: database.getRequirementTable().getTable()) {
+            int numberNeeded = item.getNumberOfStaffNeeded();
+            int numberHas = database.getAssignmentTable().getAllItemsRelatedTo(item).size();
+            if (numberHas < numberNeeded) {
+                items.add(item);
+            }
+        }
+        return items;
     }
 }
