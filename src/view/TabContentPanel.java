@@ -1,10 +1,9 @@
 package src.view;
 
-import src.database.Database;
+import src.database.interfaces.tables.Database;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionListener;
 

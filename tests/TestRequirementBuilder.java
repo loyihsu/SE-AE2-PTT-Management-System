@@ -1,14 +1,14 @@
 package tests;
 
+import org.junit.jupiter.api.Test;
+import src.database.filedb.tables.RequirementTable;
+import src.database.types.Requirement;
+import src.database.types.builder.RequirementBuilder;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import src.database.filedb.tables.RequirementTable;
-import src.database.types.*;
-import src.database.types.builder.*;
 
 public class TestRequirementBuilder {
     @Test
@@ -16,16 +16,18 @@ public class TestRequirementBuilder {
         ArrayList<String> trainingsNeeded = new ArrayList<String>();
         trainingsNeeded.add("Programming");
         Requirement requirement1 = new Requirement(1, 2, 10, "01-01-2020", "03-30-2020", trainingsNeeded);
-        Requirement requirement2 = RequirementBuilder.getInstance()
-                                                     .setId(1)
-                                                     .setCourseId(2)
-                                                     .setNumberOfStaffNeeded(10)
-                                                     .setTrainingsNeeded(trainingsNeeded)
-                                                     .setStartDate("01-01-2020")
-                                                     .setEndDate("03-30-2020")
-                                                     .build();
+        Requirement requirement2 = RequirementBuilder
+                .getInstance()
+                .setId(1)
+                .setCourseId(2)
+                .setNumberOfStaffNeeded(10)
+                .setTrainingsNeeded(trainingsNeeded)
+                .setStartDate("01-01-2020")
+                .setEndDate("03-30-2020")
+                .build();
         assertTrue(requirement1.equals(requirement2));
     }
+
     @Test
     void testParsingFromFileStrings() {
         String testcase = "";
@@ -40,38 +42,41 @@ public class TestRequirementBuilder {
         ArrayList<String> temp = new ArrayList<String>();
         temp.add("programming");
         temp.add("databaseDesign");
-        Requirement req = RequirementBuilder.getInstance()
-                                            .setId(1)
-                                            .setCourseId(1)
-                                            .setNumberOfStaffNeeded(10)
-                                            .setTrainingsNeeded(temp)
-                                            .setStartDate(startDate)
-                                            .setEndDate(endDate)
-                                            .build();
+        Requirement req = RequirementBuilder
+                .getInstance()
+                .setId(1)
+                .setCourseId(1)
+                .setNumberOfStaffNeeded(10)
+                .setTrainingsNeeded(temp)
+                .setStartDate(startDate)
+                .setEndDate(endDate)
+                .build();
         expectedResult.add(req);
 
         temp = new ArrayList<String>();
         temp.add("databaseDesign");
-        req = RequirementBuilder.getInstance()
-                                .setId(2)
-                                .setCourseId(2)
-                                .setNumberOfStaffNeeded(5)
-                                .setTrainingsNeeded(temp)
-                                .setStartDate(startDate)
-                                .setEndDate(endDate)
-                                .build();
+        req = RequirementBuilder
+                .getInstance()
+                .setId(2)
+                .setCourseId(2)
+                .setNumberOfStaffNeeded(5)
+                .setTrainingsNeeded(temp)
+                .setStartDate(startDate)
+                .setEndDate(endDate)
+                .build();
         expectedResult.add(req);
 
         temp = new ArrayList<String>();
         temp.add("programming");
-        req = RequirementBuilder.getInstance()
-                                .setId(3)
-                                .setCourseId(2)
-                                .setNumberOfStaffNeeded(4)
-                                .setTrainingsNeeded(temp)
-                                .setStartDate(startDate)
-                                .setEndDate(endDate)
-                                .build();
+        req = RequirementBuilder
+                .getInstance()
+                .setId(3)
+                .setCourseId(2)
+                .setNumberOfStaffNeeded(4)
+                .setTrainingsNeeded(temp)
+                .setStartDate(startDate)
+                .setEndDate(endDate)
+                .build();
         expectedResult.add(req);
 
         ArrayList<String> inputList = new ArrayList<String>();

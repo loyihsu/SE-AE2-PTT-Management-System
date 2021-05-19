@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class AddStaffFrame extends JFrame {
     JLabelAndField name, date, skill;
     JButton sendButton;
+
     public AddStaffFrame(ActionListener listener) {
         setSize(300, 200);
         setTitle("Add Staff");
@@ -26,7 +27,7 @@ public class AddStaffFrame extends JFrame {
         sendButton = new JButton("Create Staff");
         sendButton.addActionListener(listener);
 
-        contentPanel.setLayout(new GridLayout(0,1));
+        contentPanel.setLayout(new GridLayout(0, 1));
         contentPanel.add(name);
         contentPanel.add(date);
         contentPanel.add(skill);

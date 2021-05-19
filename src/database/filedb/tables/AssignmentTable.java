@@ -1,10 +1,13 @@
 package src.database.filedb.tables;
 
+import src.database.interfaces.tables.TableFilterableByTypes;
+import src.database.interfaces.tables.TableFindable;
+import src.database.types.Assignment;
+import src.database.types.Requirement;
+import src.database.types.Staff;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import src.database.*;
-import src.database.types.*;
 
 public class AssignmentTable implements TableFilterableByTypes<Assignment> {
     private ArrayList<Assignment> table;
@@ -17,12 +20,12 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
         table = new ArrayList<Assignment>();
 
         Scanner scanner;
-        for (String line: raw) {
+        for (String line : raw) {
             scanner = new Scanner(line).useDelimiter(",");
             int sid = scanner.nextInt();
             int rid = scanner.nextInt();
             table.add(new Assignment(staff.find(sid), requirements.find(rid)));
-        }   
+        }
     }
 
     public ArrayList<Assignment> getTable() {
@@ -31,7 +34,7 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
 
     public void add(Assignment item) {
         boolean flag = true;
-        for (Assignment existingItem: table) {
+        for (Assignment existingItem : table) {
             if (existingItem.equals(item)) {
                 flag = false;
                 break;
@@ -48,7 +51,7 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
 
     public ArrayList<Assignment> getAllItemsRelatedTo(Staff staff) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
-        for (Assignment item: table) {
+        for (Assignment item : table) {
             if (item.getStaff().equals(staff)) {
                 temp.add(item);
             }
@@ -58,7 +61,7 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
 
     public ArrayList<Assignment> getAllItemsRelatedTo(Requirement requirement) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
-        for (Assignment item: table) {
+        for (Assignment item : table) {
             if (item.getRequirement().equals(requirement)) {
                 temp.add(item);
             }
@@ -76,7 +79,7 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
     public void cleanAllItemsRelatedTo(Staff staff) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
 
-        for (Assignment assignment: table) {
+        for (Assignment assignment : table) {
             if (!assignment.getStaff().equals(staff)) {
                 temp.add(assignment);
             }
@@ -92,7 +95,7 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
     public void cleanAllItemsRelatedTo(Requirement requirement) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
 
-        for (Assignment assignment: table) {
+        for (Assignment assignment : table) {
             if (!assignment.getRequirement().equals(requirement)) {
                 temp.add(assignment);
             }
@@ -103,7 +106,7 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
 
     public String toString() {
         String output = "";
-        for (Assignment item: table) {
+        for (Assignment item : table) {
             output += item.toString() + "\n";
         }
         return output;

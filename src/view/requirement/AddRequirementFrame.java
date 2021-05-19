@@ -2,7 +2,6 @@ package src.view.requirement;
 
 import src.database.types.Requirement;
 import src.database.types.builder.RequirementBuilder;
-import src.view.components.JLabelAndComboBox;
 import src.view.components.JLabelAndField;
 
 import javax.swing.*;
@@ -14,6 +13,7 @@ import java.util.Scanner;
 public class AddRequirementFrame extends JFrame {
     JLabelAndField course, staffNumber, startDate, endDate, skill;
     JButton sendButton;
+
     public AddRequirementFrame(ActionListener listener) {
         setSize(300, 200);
         setTitle("Add Staff");
@@ -29,7 +29,7 @@ public class AddRequirementFrame extends JFrame {
         sendButton = new JButton("Create");
         sendButton.addActionListener(listener);
 
-        contentPanel.setLayout(new GridLayout(0,1));
+        contentPanel.setLayout(new GridLayout(0, 1));
         contentPanel.add(course);
         contentPanel.add(staffNumber);
         contentPanel.add(startDate);

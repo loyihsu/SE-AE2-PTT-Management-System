@@ -7,7 +7,7 @@ public class Staff {
     private String name;
     private String dateOfJoining;
     private ArrayList<String> trainingsReceived;
-    
+
     public Staff(int id, String name, String dateOfJoining, ArrayList<String> trainingsReceived) {
         this.id = id;
         this.name = name;
@@ -17,20 +17,20 @@ public class Staff {
 
     public String toString() {
         String output = id + "," + name + "," + dateOfJoining + ",";
-        for (String item: trainingsReceived) {
+        for (String item : trainingsReceived) {
             output += item + " ";
         }
         return output;
     }
 
     /**
-    This is the descriptive string for debugging.
-    */ 
+     * This is the descriptive string for debugging.
+     */
     public String debugString() {
         String output = "";
         output += "[" + id + "," + name + " (" + dateOfJoining + ")]: ";
-        
-        for (String training: trainingsReceived) {
+
+        for (String training : trainingsReceived) {
             output += training + ", ";
         }
 

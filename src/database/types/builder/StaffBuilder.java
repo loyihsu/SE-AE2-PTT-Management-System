@@ -1,8 +1,8 @@
 package src.database.types.builder;
 
-import java.util.ArrayList;
-
 import src.database.types.Staff;
+
+import java.util.ArrayList;
 
 public class StaffBuilder extends Builder<Staff> {
     private int id;
@@ -15,7 +15,8 @@ public class StaffBuilder extends Builder<Staff> {
     // ===============================================
     public static StaffBuilder instance = new StaffBuilder();
 
-    private StaffBuilder() { }
+    private StaffBuilder() {
+    }
 
     public static StaffBuilder getInstance() {
         return instance;

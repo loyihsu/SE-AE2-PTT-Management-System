@@ -1,32 +1,39 @@
 package src.database.filedb;
 
+import src.database.filedb.tables.AssignmentTable;
+import src.database.filedb.tables.RequirementTable;
+import src.database.filedb.tables.StaffTable;
+import src.database.interfaces.tables.Database;
+import src.database.interfaces.tables.TableFilterableByTypes;
+import src.database.interfaces.tables.TableFindable;
+import src.database.types.Assignment;
+import src.database.types.Requirement;
+import src.database.types.Staff;
+
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.ArrayList;
-
-import src.database.*;
-import src.database.types.*;
-import src.database.filedb.tables.*;
+import java.util.Scanner;
 
 public class FileDB implements Database {
     private String filepath;
-    
+
     private TableFindable<Requirement> requirements = new RequirementTable();
     private TableFindable<Staff> staff = new StaffTable();
     private TableFilterableByTypes<Assignment> assignments = new AssignmentTable();
 
     /**
-    The initialiser of the File Database.
-    This initialiser throws a `FileNotFoundException`.
-    @param path The path to the file to be read from and write to.
+     * The initialiser of the File Database.
+     * This initialiser throws a `FileNotFoundException`.
+     *
+     * @param path The path to the file to be read from and write to.
      */
     public FileDB(String path) throws FileNotFoundException {
         filepath = path;
         FileReader reader = new FileReader(path);
-        
+
         ArrayList<String> reqs = new ArrayList<String>();
         ArrayList<String> people = new ArrayList<String>();
         ArrayList<String> ass = new ArrayList<String>();
@@ -34,7 +41,7 @@ public class FileDB implements Database {
         Scanner scanner = new Scanner(reader);
         String temp = "";
         int section = 0;
-        
+
         while (scanner.hasNextLine()) {
             temp = scanner.nextLine();
             if (temp.equals("")) {
@@ -49,7 +56,7 @@ public class FileDB implements Database {
                 ass.add(temp);
             }
         }
-        
+
         requirements = new RequirementTable(reqs);
         staff = new StaffTable(people);
         assignments = new AssignmentTable(ass, requirements, staff);
@@ -60,10 +67,11 @@ public class FileDB implements Database {
     // ===============================================
     // Database
     // ===============================================
+
     /**
-    The write function of the File Database.
-    It will write the contents of the requirements and staff arraylists to the file specified in the initialiser.
-    This method throws an `IOExcecption`.
+     * The write function of the File Database.
+     * It will write the contents of the requirements and staff arraylists to the file specified in the initialiser.
+     * This method throws an `IOExcecption`.
      */
     public void write() throws IOException {
         FileWriter writer = new FileWriter(filepath);
@@ -72,7 +80,7 @@ public class FileDB implements Database {
         output += staff.toString() + "\n";
         output += assignments.toString();
         writer.write(output);
-        writer.close();        
+        writer.close();
     }
 
     public TableFilterableByTypes<Assignment> getAssignmentTable() {
@@ -99,7 +107,7 @@ public class FileDB implements Database {
             matrix[idx][4] = temp.get(idx).getEndDate();
 
             String trainings = "";
-            for (String item: temp.get(idx).getTrainingsNeeded()) {
+            for (String item : temp.get(idx).getTrainingsNeeded()) {
                 trainings += item + " ";
             }
 
@@ -107,7 +115,7 @@ public class FileDB implements Database {
 
             String assigned = "";
 
-            for (Assignment item: assignments.getAllItemsRelatedTo(temp.get(idx))) {
+            for (Assignment item : assignments.getAllItemsRelatedTo(temp.get(idx))) {
                 assigned += "(" + item.getStaff().getId() + ", " + item.getStaff().getName() + ") ";
             }
             matrix[idx][6] = assigned;
@@ -126,7 +134,7 @@ public class FileDB implements Database {
             matrix[idx][2] = temp.get(idx).getDateOfJoining();
 
             String trainings = "";
-            for (String item: temp.get(idx).getTrainingsReceived()) {
+            for (String item : temp.get(idx).getTrainingsReceived()) {
                 trainings += item + " ";
             }
 
@@ -134,8 +142,8 @@ public class FileDB implements Database {
 
             String responsibility = "";
 
-            for (Assignment item: assignments.getAllItemsRelatedTo(temp.get(idx))) {
-                responsibility += "(Lab " + item.getRequirement().getId()  + ") ";
+            for (Assignment item : assignments.getAllItemsRelatedTo(temp.get(idx))) {
+                responsibility += "(Lab " + item.getRequirement().getId() + ") ";
             }
 
             matrix[idx][4] = responsibility;

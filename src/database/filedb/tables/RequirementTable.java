@@ -1,11 +1,11 @@
 package src.database.filedb.tables;
 
+import src.database.interfaces.tables.TableFindable;
+import src.database.types.Requirement;
+import src.database.types.builder.RequirementBuilder;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import src.database.TableFindable;
-import src.database.types.*;
-import src.database.types.builder.*;
 
 public class RequirementTable implements TableFindable<Requirement> {
     private ArrayList<Requirement> table;
@@ -17,7 +17,7 @@ public class RequirementTable implements TableFindable<Requirement> {
     public RequirementTable(ArrayList<String> raw) {
         table = new ArrayList<Requirement>();
         Scanner scanner;
-        for (String item: raw) {
+        for (String item : raw) {
             scanner = new Scanner(item).useDelimiter(",");
 
             int id = scanner.nextInt();
@@ -33,23 +33,24 @@ public class RequirementTable implements TableFindable<Requirement> {
                     allRequirements.add(s.next());
                 }
             }
-            
+
             RequirementBuilder builder = RequirementBuilder.getInstance();
 
-            Requirement temp = builder.setId(id)
-                                       .setCourseId(courseId)
-                                       .setNumberOfStaffNeeded(numberOfStaffNeeded)
-                                       .setTrainingsNeeded(allRequirements)
-                                       .setStartDate(sDate)
-                                       .setEndDate(eDate)
-                                       .build();
+            Requirement temp = builder
+                    .setId(id)
+                    .setCourseId(courseId)
+                    .setNumberOfStaffNeeded(numberOfStaffNeeded)
+                    .setTrainingsNeeded(allRequirements)
+                    .setStartDate(sDate)
+                    .setEndDate(eDate)
+                    .build();
 
             table.add(temp);
         }
     }
 
     public Requirement find(int id) {
-        for (Requirement item: table) {
+        for (Requirement item : table) {
             if (item.getId() == id) {
                 return item;
             }
@@ -59,9 +60,9 @@ public class RequirementTable implements TableFindable<Requirement> {
 
     public ArrayList<Requirement> findWithSkills(ArrayList<String> skills) {
         ArrayList<Requirement> temp = table;
-        for (String skill: skills) {
+        for (String skill : skills) {
             ArrayList<Requirement> newTemp = new ArrayList<Requirement>();
-            for (Requirement s: temp) {
+            for (Requirement s : temp) {
                 if (s.getTrainingsNeeded().contains(skill)) {
                     newTemp.add(s);
                 }
@@ -85,7 +86,7 @@ public class RequirementTable implements TableFindable<Requirement> {
 
     public String toString() {
         String output = "";
-        for (Requirement item: table) {
+        for (Requirement item : table) {
             output += item.toString() + "\n";
         }
         return output;

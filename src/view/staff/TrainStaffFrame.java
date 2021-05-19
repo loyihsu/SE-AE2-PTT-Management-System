@@ -1,7 +1,6 @@
 package src.view.staff;
 
-import src.database.Database;
-
+import src.database.interfaces.tables.Database;
 import src.database.types.Staff;
 import src.view.components.JLabelAndComboBox;
 import src.view.components.JLabelAndField;
@@ -36,7 +35,7 @@ public class TrainStaffFrame extends JFrame {
         sendButton = new JButton("Train");
         sendButton.addActionListener(listener);
 
-        contentPanel.setLayout(new GridLayout(0,1));
+        contentPanel.setLayout(new GridLayout(0, 1));
         contentPanel.add(namePicker);
         contentPanel.add(skill);
 
@@ -48,7 +47,7 @@ public class TrainStaffFrame extends JFrame {
     private ArrayList<String> generateSelections(ArrayList<Staff> input) {
         ArrayList<String> output = new ArrayList<String>();
 
-        for (Staff item: input) {
+        for (Staff item : input) {
             output.add("(" + item.getId() + ", " + item.getName() + ")");
         }
 
@@ -61,7 +60,7 @@ public class TrainStaffFrame extends JFrame {
 
     public void trainStaff(Database database) {
         Staff staff = nameList.get(namePicker.getUserInput());
-        for (String training: parseTrainings(skill.getUserInput())) {
+        for (String training : parseTrainings(skill.getUserInput())) {
             staff.addTrainingReceived(training);
         }
     }

@@ -1,7 +1,10 @@
 package src.view.requirement;
 
-import src.database.*;
-import src.database.types.*;
+import src.database.DatabaseDecorator;
+import src.database.interfaces.tables.Database;
+import src.database.types.Assignment;
+import src.database.types.Requirement;
+import src.database.types.Staff;
 import src.view.components.JLabelAndComboBox;
 
 import javax.swing.*;
@@ -71,7 +74,7 @@ public class AssignStaffFrame extends JFrame {
     private ArrayList<String> generateStaffSelections(ArrayList<Staff> qualifiedStaff) {
         ArrayList<String> output = new ArrayList<String>();
 
-        for (Staff staff: qualifiedStaff) {
+        for (Staff staff : qualifiedStaff) {
             output.add("(" + staff.getId() + ", " + staff.getName() + ")");
         }
 
@@ -82,7 +85,7 @@ public class AssignStaffFrame extends JFrame {
         requirements = decorator.getRequirementsWithoutEnoughPeople();
         ArrayList<String> output = new ArrayList<String>();
 
-        for (Requirement item: requirements) {
+        for (Requirement item : requirements) {
             output.add("(Lab " + item.getId() + ")");
         }
 

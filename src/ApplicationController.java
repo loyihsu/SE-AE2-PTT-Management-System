@@ -1,18 +1,21 @@
 package src;
 
-import java.io.File;
-import java.io.IOException;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import src.database.*;
-import src.database.filedb.*;
-import src.view.*;
-import src.view.requirement.*;
-import src.view.staff.*;
-import src.database.types.*;
+import src.database.DatabaseDecorator;
+import src.database.filedb.FileDB;
+import src.database.interfaces.tables.Database;
+import src.database.types.Requirement;
+import src.database.types.Staff;
+import src.view.ApplicationView;
+import src.view.requirement.AddRequirementFrame;
+import src.view.requirement.AssignStaffFrame;
+import src.view.staff.AddStaffFrame;
+import src.view.staff.TrainStaffFrame;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class ApplicationController implements ActionListener {
     private DatabaseDecorator database;
@@ -49,9 +52,9 @@ public class ApplicationController implements ActionListener {
                 int id = Integer.parseInt(result);
                 Staff staff = database.getDatabase().getStaffTable().find(id);
                 if (staff == null) {
-                    JOptionPane.showMessageDialog(null, "Invalid input: Staff doesn't exist.","Operation Failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Invalid input: Staff doesn't exist.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove ("+ id + ","+ staff.getName() + ")");
+                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove (" + id + "," + staff.getName() + ")");
                     if (confirm == JOptionPane.YES_OPTION) {
                         database.cleanlyRemoveStaff(staff);
                         view.getStaffPanel().refreshTable();
@@ -59,7 +62,7 @@ public class ApplicationController implements ActionListener {
                     }
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Invalid input.","Operation Failed", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Invalid input.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
             }
         } else if (event.getSource() == view.getRequirementPanel().getTopButton()) {
             // Add New Requirement
@@ -74,9 +77,9 @@ public class ApplicationController implements ActionListener {
                 int id = Integer.parseInt(result);
                 Requirement requirement = database.getDatabase().getRequirementTable().find(id);
                 if (requirement == null) {
-                    JOptionPane.showMessageDialog(null, "Invalid input: Lab doesn't exist.","Operation Failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Invalid input: Lab doesn't exist.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove (Lab "+ id  +")");
+                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove (Lab " + id + ")");
                     if (confirm == JOptionPane.YES_OPTION) {
                         database.cleanlyRemoveRequirement(requirement);
                         view.getStaffPanel().refreshTable();
@@ -84,12 +87,12 @@ public class ApplicationController implements ActionListener {
                     }
                 }
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Invalid input.","Operation Failed", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Invalid input.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
             }
         } else if (popup instanceof AddRequirementFrame) {
             AddRequirementFrame current = (AddRequirementFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                int id = database.getDatabase().getRequirementTable().getTable().size()+1;
+                int id = database.getDatabase().getRequirementTable().getTable().size() + 1;
                 database.getDatabase().getRequirementTable().add(current.getUserInput(id));
                 view.getRequirementPanel().refreshTable();
                 popup.setVisible(false);
@@ -107,7 +110,7 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof AddStaffFrame) {
             AddStaffFrame current = (AddStaffFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                int id = database.getDatabase().getStaffTable().getTable().size()+1;
+                int id = database.getDatabase().getStaffTable().getTable().size() + 1;
                 database.getDatabase().getStaffTable().add(current.getUserInput(id));
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
@@ -125,7 +128,7 @@ public class ApplicationController implements ActionListener {
     }
 
     private void setPopupAndSetVisible(JFrame view) {
-        if (popup == null || popup.isVisible() == false){
+        if (popup == null || popup.isVisible() == false) {
             popup = view;
             popup.setVisible(true);
         }

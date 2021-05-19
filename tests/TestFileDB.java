@@ -1,14 +1,16 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import src.database.*;
 import src.database.filedb.FileDB;
+import src.database.interfaces.tables.Database;
+import src.database.interfaces.tables.TableFindable;
 import src.database.types.Staff;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestFileDB {
     @Test

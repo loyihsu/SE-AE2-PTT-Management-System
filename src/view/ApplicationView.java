@@ -1,7 +1,7 @@
 package src.view;
 
 import src.ApplicationController;
-import src.database.*;
+import src.database.interfaces.tables.Database;
 
 import javax.swing.*;
 

@@ -1,3 +1,3 @@
 package src.view;
 
-public enum TableSelector { REQUIREMENT, STAFF }
+public enum TableSelector {REQUIREMENT, STAFF}

@@ -1,8 +1,8 @@
 package src.database.types.builder;
 
-import java.util.ArrayList;
-
 import src.database.types.Requirement;
+
+import java.util.ArrayList;
 
 public class RequirementBuilder extends Builder<Requirement> {
     private int id = 0;
@@ -11,14 +11,15 @@ public class RequirementBuilder extends Builder<Requirement> {
     private String startDate = "";
     private String endDate = "";
     private ArrayList<String> trainingsNeeded = new ArrayList<String>();
-    
+
     // ===============================================
     // Singleton
     // ===============================================
     public static RequirementBuilder instance = new RequirementBuilder();
-    
-    private RequirementBuilder() { }
-    
+
+    private RequirementBuilder() {
+    }
+
     public static RequirementBuilder getInstance() {
         return instance;
     }
@@ -60,6 +61,6 @@ public class RequirementBuilder extends Builder<Requirement> {
     // Builder
     // ===============================================
     public Requirement build() {
-        return new Requirement(id,courseId,numberOfStaffNeeded,startDate,endDate,trainingsNeeded);
+        return new Requirement(id, courseId, numberOfStaffNeeded, startDate, endDate, trainingsNeeded);
     }
 }
