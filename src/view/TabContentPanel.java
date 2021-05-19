@@ -1,21 +1,27 @@
 package src.view;
 
+import src.database.DatabaseDecorator;
+import src.database.TableCleanableByTypes;
+import src.database.TableFindable;
+import src.database.filedb.tables.RequirementTable;
+import src.database.types.Assignment;
+
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class TabContentPanel extends JPanel {
+    JScrollPane tableScrollPane;
     JButton topButton, middleButton, lowerButton;
 
-    public TabContentPanel(ActionListener listener, String topButtonLabel, String middleButtonLabel, String lowButtonLabel) {
+    public TabContentPanel(ActionListener listener, String mode, DatabaseDecorator databaseDecorator, String topButtonLabel, String middleButtonLabel, String lowButtonLabel) {
         this.setLayout(new BorderLayout());
 
-        JPanel contentPanel = new JPanel();
-
-        JLabel hello = new JLabel("Hello");
-        contentPanel.add(hello);
-
-        this.add(contentPanel, BorderLayout.CENTER);
+        drawTable(databaseDecorator, mode);
+        this.add(tableScrollPane, BorderLayout.CENTER);
 
         JPanel controlPanel = new JPanel();
 
@@ -34,6 +40,24 @@ public class TabContentPanel extends JPanel {
         controlPanel.add(lowerButton);
 
         this.add(controlPanel, BorderLayout.EAST);
+    }
+
+    public void drawTable(DatabaseDecorator databaseDecorator, String mode) {
+        String[] columns;
+        if (mode.equals("R")) {
+            String[] columnNames = {"Lab ID", "Course ID", "Number of Staff Needed", "Start Date", "End Date", "Trainings Needed", "Assigned Staff"};
+            columns = columnNames;
+        } else {
+            String[] columnNames = {"Staff ID", "Name", "Date of Joining", "Trainings Received", "Responsible for Labs"};
+            columns = columnNames;
+        }
+
+        Object[][] matrixData = {{"1", "1", "1", "1", "1", "1", "1"}};
+//        Object[][] matrixData = (mode == "R") ? databaseDecorator.getRequirementsDisplayMatrix() : databaseDecorator.getStaffDisplayMatrix();
+
+        JTable table = new JTable(matrixData, columns);
+        tableScrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
     }
 
     public JButton getTopButton() {

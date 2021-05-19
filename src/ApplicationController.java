@@ -21,7 +21,7 @@ public class ApplicationController implements ActionListener {
 
     public ApplicationController(DatabaseDecorator database) {
         this.database = database;
-        this.view = new ApplicationView(this, database.getDatabase());
+        this.view = new ApplicationView(this, database);
     }
 
     public DatabaseDecorator getDatabase() {
