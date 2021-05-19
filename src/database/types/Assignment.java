@@ -1,4 +1,4 @@
-package src.datatype;
+package src.database.types;
 
 public class Assignment {
     private Staff staff;

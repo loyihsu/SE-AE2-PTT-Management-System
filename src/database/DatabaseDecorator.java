@@ -1,6 +1,6 @@
 package src.database;
 
-import src.datatype.*;
+import src.database.types.*;
 
 public class DatabaseDecorator {
     private Database database;

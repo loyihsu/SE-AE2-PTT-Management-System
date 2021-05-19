@@ -1,4 +1,4 @@
-package src.datatype;
+package src.database.types;
 
 import java.util.ArrayList;
 

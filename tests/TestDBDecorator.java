@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import src.database.Database;
 import src.database.DatabaseDecorator;
 import src.database.filedb.FileDB;
-import src.datatype.*;
+import src.database.types.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;

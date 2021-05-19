@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import src.database.filedb.tables.StaffTable;
-import src.datatype.*;
-import src.datatype.builder.*;
+import src.database.types.*;
+import src.database.types.builder.*;
 
 public class TestStaffBuilder {
     @Test

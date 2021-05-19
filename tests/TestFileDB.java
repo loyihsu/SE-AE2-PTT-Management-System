@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import src.database.*;
 import src.database.filedb.FileDB;
-import src.datatype.Staff;
+import src.database.types.Staff;
 
 import java.io.File;
 import java.io.FileNotFoundException;

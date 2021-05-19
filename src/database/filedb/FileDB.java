@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import src.database.*;
-import src.datatype.*;
+import src.database.types.*;
 import src.database.filedb.tables.*;
 
 public class FileDB implements Database {
