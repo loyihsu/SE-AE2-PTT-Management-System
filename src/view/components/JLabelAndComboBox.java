@@ -27,7 +27,6 @@ public class JLabelAndComboBox extends JComponent {
     }
 
     public void changeSelections(String[] selections) {
-        System.out.println(selections);
         box.setModel(new DefaultComboBoxModel(selections));
         box.repaint();
     }
