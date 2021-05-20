@@ -53,7 +53,7 @@ public class TestFileDB {
 
         assertTrue(allRelatedAssignments.size() > 0);
 
-        database.cleanlyRemoveStaff(chris);
+        database.cleanlyRemove(chris);
 
         assertTrue(database.getStaffTable().find(3) == null);
 
@@ -87,7 +87,7 @@ public class TestFileDB {
 
         assertTrue(allRelatedAssignments.size() > 0);
 
-        database.cleanlyRemoveRequirement(programming);
+        database.cleanlyRemove(programming);
 
         assertTrue(database.getRequirementTable().find(3) == null);
 

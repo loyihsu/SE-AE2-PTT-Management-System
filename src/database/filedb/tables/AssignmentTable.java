@@ -1,15 +1,16 @@
 package src.database.filedb.tables;
 
-import src.database.interfaces.tables.TableFilterableByTypes;
+import src.database.interfaces.tables.TableFilterableByAssignmentElements;
 import src.database.interfaces.tables.TableFindable;
 import src.database.types.Assignment;
 import src.database.types.Requirement;
 import src.database.types.Staff;
+import src.database.types.interfaces.AssignmentElement;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AssignmentTable implements TableFilterableByTypes<Assignment> {
+public class AssignmentTable implements TableFilterableByAssignmentElements<Assignment> {
     private ArrayList<Assignment> table;
 
     public AssignmentTable() {
@@ -28,6 +29,17 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
         }
     }
 
+    public String toString() {
+        String output = "";
+        for (Assignment item : table) {
+            output += item.toString() + "\n";
+        }
+        return output;
+    }
+
+    // ===============================================
+    // Table
+    // ===============================================
     public ArrayList<Assignment> getTable() {
         return table;
     }
@@ -49,66 +61,26 @@ public class AssignmentTable implements TableFilterableByTypes<Assignment> {
         table.remove(item);
     }
 
-    public ArrayList<Assignment> getAllItemsRelatedTo(Staff staff) {
+    // ===============================================
+    // TableFilterableByAssignmentElements
+    // ===============================================
+    public ArrayList<Assignment> getAllItemsRelatedTo(AssignmentElement element) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
         for (Assignment item : table) {
-            if (item.getStaff().equals(staff)) {
+            if (item.getStaff().equals(element) || item.getRequirement().equals(element)) {
                 temp.add(item);
             }
         }
         return temp;
     }
 
-    public ArrayList<Assignment> getAllItemsRelatedTo(Requirement requirement) {
+    public void cleanAllItemsRelatedTo(AssignmentElement element) {
         ArrayList<Assignment> temp = new ArrayList<Assignment>();
-        for (Assignment item : table) {
-            if (item.getRequirement().equals(requirement)) {
-                temp.add(item);
-            }
-        }
-        return temp;
-    }
-
-    public ArrayList<Assignment> getAllItemsRelatedTo(Assignment assignment) {
-        ArrayList<Assignment> temp = new ArrayList<Assignment>();
-        temp.add(assignment);
-        return temp;
-    }
-
-
-    public void cleanAllItemsRelatedTo(Staff staff) {
-        ArrayList<Assignment> temp = new ArrayList<Assignment>();
-
         for (Assignment assignment : table) {
-            if (!assignment.getStaff().equals(staff)) {
+            if (!assignment.getStaff().equals(element) && !assignment.getRequirement().equals(element)) {
                 temp.add(assignment);
             }
         }
-
         table = temp;
-    }
-
-    public void cleanAllItemsRelatedTo(Assignment assignment) {
-        this.remove(assignment);
-    }
-
-    public void cleanAllItemsRelatedTo(Requirement requirement) {
-        ArrayList<Assignment> temp = new ArrayList<Assignment>();
-
-        for (Assignment assignment : table) {
-            if (!assignment.getRequirement().equals(requirement)) {
-                temp.add(assignment);
-            }
-        }
-
-        table = temp;
-    }
-
-    public String toString() {
-        String output = "";
-        for (Assignment item : table) {
-            output += item.toString() + "\n";
-        }
-        return output;
     }
 }

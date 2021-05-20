@@ -23,6 +23,13 @@ public class StaffBuilder extends Builder<Staff> {
     }
 
     // ===============================================
+    // Builder
+    // ===============================================
+    public Staff build() {
+        return new Staff(id, name, dateOfJoining, trainingsReceived);
+    }
+
+    // ===============================================
     // Setters
     // ===============================================
     public StaffBuilder setId(int value) {
@@ -43,12 +50,5 @@ public class StaffBuilder extends Builder<Staff> {
     public StaffBuilder setTrainingsReceived(ArrayList<String> value) {
         trainingsReceived = value;
         return this;
-    }
-
-    // ===============================================
-    // Builder
-    // ===============================================
-    public Staff build() {
-        return new Staff(id, name, dateOfJoining, trainingsReceived);
     }
 }

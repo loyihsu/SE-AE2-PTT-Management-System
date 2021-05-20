@@ -1,36 +1,41 @@
 package src.view;
 
 import src.ApplicationController;
-import src.database.interfaces.Database;
+import src.view.components.ModeSelector;
+import src.view.components.TabContentPanel;
 
 import javax.swing.*;
 
 public class ApplicationView extends JFrame {
-    private Database database;
-    private ApplicationController controller;
-    private JTabbedPane tabbedPane;
+    private final JTabbedPane tabbedPane;
 
     TabContentPanel requirementPanel, staffPanel;
 
-    public ApplicationView(ApplicationController controller, Database database) {
-        this.database = database;
-        this.controller = controller;
-
-        setSize(640, 480);
+    public ApplicationView(ApplicationController controller) {
+        // Setup the window
+        setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("Application");
+        setTitle("PTT Management System");
 
+        // Setup UI elements
         tabbedPane = new JTabbedPane();
 
-        requirementPanel = new TabContentPanel(controller, TableSelector.REQUIREMENT, database, "Add New Lab", "Assign Staff to Lab", "Remove Lab");
+        // Requirement Panel
+        requirementPanel = new TabContentPanel(controller, ModeSelector.REQUIREMENT,
+                "Add New Lab", "Assign Staff to Lab", "Remove Lab");
         tabbedPane.addTab("Labs", requirementPanel);
 
-        staffPanel = new TabContentPanel(controller, TableSelector.STAFF, database, "Add New Staff", "Train Staff", "Remove Staff");
+        // Staff Panel
+        staffPanel = new TabContentPanel(controller, ModeSelector.STAFF,
+                "Add New Staff", "Train Staff", "Remove Staff");
         tabbedPane.addTab("Staff", staffPanel);
 
         this.add(tabbedPane);
     }
 
+    // ===============================================
+    // Getters
+    // ===============================================
     public TabContentPanel getRequirementPanel() {
         return requirementPanel;
     }

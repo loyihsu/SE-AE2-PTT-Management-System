@@ -25,6 +25,13 @@ public class RequirementBuilder extends Builder<Requirement> {
     }
 
     // ===============================================
+    // Builder
+    // ===============================================
+    public Requirement build() {
+        return new Requirement(id, courseId, numberOfStaffNeeded, startDate, endDate, trainingsNeeded);
+    }
+
+    // ===============================================
     // Setters
     // ===============================================
     public RequirementBuilder setId(int value) {
@@ -55,12 +62,5 @@ public class RequirementBuilder extends Builder<Requirement> {
     public RequirementBuilder setEndDate(String date) {
         endDate = date;
         return this;
-    }
-
-    // ===============================================
-    // Builder
-    // ===============================================
-    public Requirement build() {
-        return new Requirement(id, courseId, numberOfStaffNeeded, startDate, endDate, trainingsNeeded);
     }
 }

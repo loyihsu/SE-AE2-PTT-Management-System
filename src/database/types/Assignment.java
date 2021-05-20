@@ -1,8 +1,8 @@
 package src.database.types;
 
 public class Assignment {
-    private Staff staff;
-    private Requirement requirement;
+    private final Staff staff;
+    private final Requirement requirement;
 
     public Assignment(Staff staff, Requirement requirement) {
         this.staff = staff;
@@ -20,10 +20,9 @@ public class Assignment {
         return staff.getId() + "," + requirement.getId();
     }
 
-    public String debugString() {
-        return staff.getName() + " is assigned to " + requirement.getId();
-    }
-
+    // ===============================================
+    // Getters
+    // ===============================================
     public Staff getStaff() {
         return staff;
     }

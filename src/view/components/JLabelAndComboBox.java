@@ -10,9 +10,13 @@ public class JLabelAndComboBox extends JComponent {
     JComboBox box;
 
     public JLabelAndComboBox(String string, ArrayList<String> selections, ActionListener listener) {
+        // Setup Component
         this.setLayout(new GridLayout(0, 2));
+
+        // Setup UI elements
         label = new JLabel(string);
         box = new JComboBox();
+
         for (String selection : selections) {
             box.addItem(selection);
         }
@@ -21,6 +25,13 @@ public class JLabelAndComboBox extends JComponent {
         this.add(box);
 
         box.addActionListener(listener);
+    }
+
+    // ===============================================
+    // Getter and Helpers
+    // ===============================================
+    public JComboBox getBox() {
+        return box;
     }
 
     public int getUserInput() {

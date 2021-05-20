@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StaffTable implements TableFindable<Staff> {
-    private ArrayList<Staff> table;
+    private final ArrayList<Staff> table;
 
     public StaffTable() {
         table = new ArrayList<Staff>();
@@ -44,6 +44,32 @@ public class StaffTable implements TableFindable<Staff> {
         }
     }
 
+    public String toString() {
+        String output = "";
+        for (Staff item : table) {
+            output += item.toString() + "\n";
+        }
+        return output;
+    }
+
+    // ===============================================
+    // Table
+    // ===============================================
+    public ArrayList<Staff> getTable() {
+        return table;
+    }
+
+    public void add(Staff staff) {
+        table.add(staff);
+    }
+
+    public void remove(Staff staff) {
+        table.remove(staff);
+    }
+
+    // ===============================================
+    // TableFinable
+    // ===============================================
     public Staff find(int id) {
         for (Staff item : table) {
             if (item.getId() == id) {
@@ -65,25 +91,5 @@ public class StaffTable implements TableFindable<Staff> {
             temp = newTemp;
         }
         return temp;
-    }
-
-    public ArrayList<Staff> getTable() {
-        return table;
-    }
-
-    public void add(Staff staff) {
-        table.add(staff);
-    }
-
-    public void remove(Staff staff) {
-        table.remove(staff);
-    }
-
-    public String toString() {
-        String output = "";
-        for (Staff item : table) {
-            output += item.toString() + "\n";
-        }
-        return output;
     }
 }

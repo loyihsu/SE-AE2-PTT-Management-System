@@ -4,28 +4,50 @@ import src.database.filedb.FileDB;
 import src.database.interfaces.Database;
 import src.database.types.Requirement;
 import src.database.types.Staff;
+import src.database.types.interfaces.AssignmentElement;
 import src.view.ApplicationView;
-import src.view.requirement.AddRequirementFrame;
-import src.view.requirement.AssignStaffFrame;
-import src.view.staff.AddStaffFrame;
-import src.view.staff.TrainStaffFrame;
+import src.view.components.ModeSelector;
+import src.view.popups.requirement.RAssignmentFrame;
+import src.view.popups.requirement.RCreationFrame;
+import src.view.popups.staff.SCreationFrame;
+import src.view.popups.staff.STrainingFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ApplicationController implements ActionListener {
-    private Database database;
-    private ApplicationView view;
+    private final Database database;
+    private final ApplicationView view;
     private JFrame popup;
 
     public ApplicationController(Database database) {
         this.database = database;
-        this.view = new ApplicationView(this, database);
+        this.view = new ApplicationView(this);
+        ShutDownTask task = new ShutDownTask(database);
+        Runtime.getRuntime().addShutdownHook(task);
     }
 
+    // ===============================================
+    // Application Starter
+    // ===============================================
+    public static void main(String[] args) throws IOException {
+        // This code dynamically find the file.txt file in the database/filedb folder and create a Database object from it.
+        String filepath = new File("./src/database/filedb/file.txt").getAbsolutePath();
+        Database database = new FileDB(filepath);
+        ApplicationController controller = new ApplicationController(database);
+
+        JFrame gui = controller.getView();
+        gui.setVisible(true);
+    }
+
+    // ===============================================
+    // Getters
+    // ===============================================
     public Database getDatabase() {
         return database;
     }
@@ -40,56 +62,24 @@ public class ApplicationController implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == view.getStaffPanel().getTopButton()) {
             // Add New Staff
-            setPopupAndSetVisible(new AddStaffFrame(this));
+            setPopupAndSetVisible(new SCreationFrame(this));
         } else if (event.getSource() == view.getStaffPanel().getMiddleButton()) {
             // Train Staff
-            setPopupAndSetVisible(new TrainStaffFrame(this, database));
+            setPopupAndSetVisible(new STrainingFrame(this));
         } else if (event.getSource() == view.getStaffPanel().getLowerButton()) {
             // Remove Staff
-            String result = JOptionPane.showInputDialog(null, "Which staff (id) would you like to remove?");
-            try {
-                int id = Integer.parseInt(result);
-                Staff staff = database.getStaffTable().find(id);
-                if (staff == null) {
-                    JOptionPane.showMessageDialog(null, "Invalid input: Staff doesn't exist.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove (" + id + "," + staff.getName() + ")");
-                    if (confirm == JOptionPane.YES_OPTION) {
-                        database.cleanlyRemoveStaff(staff);
-                        view.getStaffPanel().refreshTable();
-                        view.getRequirementPanel().refreshTable();
-                    }
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Invalid input.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
-            }
+            createRemoverOptionPane(ModeSelector.STAFF);
         } else if (event.getSource() == view.getRequirementPanel().getTopButton()) {
             // Add New Requirement
-            setPopupAndSetVisible(new AddRequirementFrame(this));
+            setPopupAndSetVisible(new RCreationFrame(this));
         } else if (event.getSource() == view.getRequirementPanel().getMiddleButton()) {
             // Assign Staff to Lab
-            setPopupAndSetVisible(new AssignStaffFrame(this, database));
+            setPopupAndSetVisible(new RAssignmentFrame(this));
         } else if (event.getSource() == view.getRequirementPanel().getLowerButton()) {
             // Remove Requirement
-            String result = JOptionPane.showInputDialog(null, "Which lab (id) would you like to remove?");
-            try {
-                int id = Integer.parseInt(result);
-                Requirement requirement = database.getRequirementTable().find(id);
-                if (requirement == null) {
-                    JOptionPane.showMessageDialog(null, "Invalid input: Lab doesn't exist.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove (Lab " + id + ")");
-                    if (confirm == JOptionPane.YES_OPTION) {
-                        database.cleanlyRemoveRequirement(requirement);
-                        view.getStaffPanel().refreshTable();
-                        view.getRequirementPanel().refreshTable();
-                    }
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Invalid input.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
-            }
-        } else if (popup instanceof AddRequirementFrame) {
-            AddRequirementFrame current = (AddRequirementFrame) popup;
+            createRemoverOptionPane(ModeSelector.REQUIREMENT);
+        } else if (popup instanceof RCreationFrame) {
+            RCreationFrame current = (RCreationFrame) popup;
             if (event.getSource() == current.getSendButton()) {
                 int id = database.getRequirementTable().getTable().size() + 1;
                 database.getRequirementTable().add(current.getUserInput(id));
@@ -97,17 +87,23 @@ public class ApplicationController implements ActionListener {
                 popup.setVisible(false);
                 popup = null;
             }
-        } else if (popup instanceof AssignStaffFrame) {
-            AssignStaffFrame current = (AssignStaffFrame) popup;
+        } else if (popup instanceof RAssignmentFrame) {
+            RAssignmentFrame current = (RAssignmentFrame) popup;
             if (event.getSource() == current.getSendButton()) {
                 database.getAssignmentTable().add(current.getUserInput(database));
                 view.getRequirementPanel().refreshTable();
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
                 popup = null;
+            } else if (event.getSource() == current.getLab().getBox()) {
+                Requirement item = current.getRequirements().get(current.getLab().getUserInput());
+                ArrayList<String> trainingsNeeded = item.getTrainingsNeeded();
+                ArrayList<Staff> qualifiedStaff = database.getStaffTable().findWithSkills(trainingsNeeded);
+                current.setQualifiedStaff(qualifiedStaff);
+                current.updateStaffSelections();
             }
-        } else if (popup instanceof AddStaffFrame) {
-            AddStaffFrame current = (AddStaffFrame) popup;
+        } else if (popup instanceof SCreationFrame) {
+            SCreationFrame current = (SCreationFrame) popup;
             if (event.getSource() == current.getSendButton()) {
                 int id = database.getStaffTable().getTable().size() + 1;
                 database.getStaffTable().add(current.getUserInput(id));
@@ -115,8 +111,8 @@ public class ApplicationController implements ActionListener {
                 popup.setVisible(false);
                 popup = null;
             }
-        } else if (popup instanceof TrainStaffFrame) {
-            TrainStaffFrame current = (TrainStaffFrame) popup;
+        } else if (popup instanceof STrainingFrame) {
+            STrainingFrame current = (STrainingFrame) popup;
             if (event.getSource() == current.getSendButton()) {
                 current.trainStaff(database);
                 view.getStaffPanel().refreshTable();
@@ -126,6 +122,9 @@ public class ApplicationController implements ActionListener {
         }
     }
 
+    // ===============================================
+    // Helpers
+    // ===============================================
     private void setPopupAndSetVisible(JFrame view) {
         if (popup == null || popup.isVisible() == false) {
             popup = view;
@@ -133,15 +132,61 @@ public class ApplicationController implements ActionListener {
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        // This code dynamically find the file.txt file in the database/filedb folder and create a Database object from it.
-        String filepath = new File("./src/database/filedb/file.txt").getAbsolutePath();
-        Database database = new FileDB(filepath);
-        ApplicationController controller = new ApplicationController(database);
+    private void createRemoverOptionPane(ModeSelector mode) {
+        String modeName = (mode == ModeSelector.REQUIREMENT) ? "Lab" : "Staff";
+        String result = JOptionPane.showInputDialog(null, "Which " + modeName.toLowerCase() + " (id) would you like to remove?");
+        try {
+            int id = Integer.parseInt(result);
+            AssignmentElement item;
+            if (mode == ModeSelector.REQUIREMENT) {
+                item = database.getRequirementTable().find(id);
+            } else {
+                item = database.getStaffTable().find(id);
+            }
+            if (item == null) {
+                JOptionPane.showMessageDialog(null, "Invalid input: " + modeName + " doesn't exist.",
+                        "Operation Failed", JOptionPane.ERROR_MESSAGE);
+            } else {
+                int confirm = JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to remove " + item.getDisplayString());
+                if (confirm == JOptionPane.YES_OPTION) {
+                    database.cleanlyRemove(item);
+                    view.getStaffPanel().refreshTable();
+                    view.getRequirementPanel().refreshTable();
+                }
+            }
+        } catch (NumberFormatException e) {
+            if (!result.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Invalid input.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
-        JFrame gui = controller.getView();
-        gui.setVisible(true);
+    public ArrayList<String> parseTrainingsString(String input) {
+        ArrayList<String> output = new ArrayList<String>();
+        Scanner scanner = new Scanner(input);
+        while (scanner.hasNext()) {
+            output.add(scanner.next());
+        }
+        return output;
+    }
 
-//        database.write();
+    // ===============================================
+    // Write back on exit
+    // ===============================================
+    public static class ShutDownTask extends Thread {
+        Database database;
+
+        public ShutDownTask(Database database) {
+            this.database = database;
+        }
+
+        public void run() {
+            try {
+                database.write();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

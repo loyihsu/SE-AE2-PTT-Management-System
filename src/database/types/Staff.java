@@ -1,18 +1,27 @@
 package src.database.types;
 
+import src.database.types.interfaces.AssignmentElement;
+
 import java.util.ArrayList;
 
-public class Staff {
-    private int id;
-    private String name;
-    private String dateOfJoining;
-    private ArrayList<String> trainingsReceived;
+public class Staff implements AssignmentElement {
+    private final int id;
+    private final String name;
+    private final String dateOfJoining;
+    private final ArrayList<String> trainingsReceived;
 
     public Staff(int id, String name, String dateOfJoining, ArrayList<String> trainingsReceived) {
         this.id = id;
         this.name = name;
         this.dateOfJoining = dateOfJoining;
         this.trainingsReceived = trainingsReceived;
+    }
+
+    public boolean equals(Object another) {
+        if (another instanceof Staff) {
+            return this.toString().equals(another.toString());
+        }
+        return false;
     }
 
     public String toString() {
@@ -23,22 +32,15 @@ public class Staff {
         return output;
     }
 
-    /**
-     * This is the descriptive string for debugging.
-     */
-    public String debugString() {
-        String output = "";
-        output += "[" + id + "," + name + " (" + dateOfJoining + ")]: ";
-
-        for (String training : trainingsReceived) {
-            output += training + ", ";
-        }
-
-        return output;
+    // ===============================================
+    // Assignment Element
+    // ===============================================
+    public String getDisplayString() {
+        return "(" + id + ", " + name + ")";
     }
 
     // ===============================================
-    // Getter and Setter
+    // Getter and Helpers
     // ===============================================
     public int getId() {
         return id;
@@ -60,16 +62,5 @@ public class Staff {
         if (!trainingsReceived.contains(training)) {
             trainingsReceived.add(training);
         }
-    }
-
-    public void editName(String newName) {
-        name = newName;
-    }
-
-    public boolean equals(Object another) {
-        if (another instanceof Staff) {
-            return this.toString().equals(another.toString());
-        }
-        return false;
     }
 }

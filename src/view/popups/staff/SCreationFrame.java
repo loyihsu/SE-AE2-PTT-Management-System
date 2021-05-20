@@ -1,23 +1,26 @@
-package src.view.staff;
+package src.view.popups.staff;
 
+import src.ApplicationController;
 import src.database.types.Staff;
 import src.database.types.builder.StaffBuilder;
 import src.view.components.JLabelAndField;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public class AddStaffFrame extends JFrame {
+public class SCreationFrame extends JFrame {
     JLabelAndField name, date, skill;
     JButton sendButton;
+    ApplicationController parent;
 
-    public AddStaffFrame(ActionListener listener) {
+    public SCreationFrame(ApplicationController controller) {
+        parent = controller;
+
+        // Setup window
         setSize(300, 200);
         setTitle("Add Staff");
 
+        // Setup UI elements
         JPanel contentPanel = new JPanel();
 
         name = new JLabelAndField("Name");
@@ -25,7 +28,7 @@ public class AddStaffFrame extends JFrame {
         skill = new JLabelAndField("Skill to add");
 
         sendButton = new JButton("Create Staff");
-        sendButton.addActionListener(listener);
+        sendButton.addActionListener(controller);
 
         contentPanel.setLayout(new GridLayout(0, 1));
         contentPanel.add(name);
@@ -37,28 +40,21 @@ public class AddStaffFrame extends JFrame {
         this.add(sendButton, BorderLayout.SOUTH);
     }
 
+    // ===============================================
+    // Getters and Helpers
+    // ===============================================
     public JButton getSendButton() {
         return sendButton;
     }
 
     public Staff getUserInput(int id) {
-        StaffBuilder staffBuilder = StaffBuilder.getInstance();
-
-        return staffBuilder
+        return StaffBuilder
+                .getInstance()
                 .setId(id)
                 .setName(name.getUserInput())
                 .setDateOfJoining(date.getUserInput())
-                .setTrainingsReceived(parseTrainings(skill.getUserInput()))
+                .setTrainingsReceived(parent.parseTrainingsString(skill.getUserInput()))
                 .build();
 
-    }
-
-    private ArrayList<String> parseTrainings(String input) {
-        ArrayList<String> output = new ArrayList<String>();
-        Scanner scanner = new Scanner(input);
-        while (scanner.hasNext()) {
-            output.add(scanner.next());
-        }
-        return output;
     }
 }

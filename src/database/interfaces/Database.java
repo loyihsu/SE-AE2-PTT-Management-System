@@ -1,10 +1,11 @@
 package src.database.interfaces;
 
-import src.database.interfaces.tables.TableFilterableByTypes;
+import src.database.interfaces.tables.TableFilterableByAssignmentElements;
 import src.database.interfaces.tables.TableFindable;
 import src.database.types.Assignment;
 import src.database.types.Requirement;
 import src.database.types.Staff;
+import src.database.types.interfaces.AssignmentElement;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,30 +14,31 @@ import java.util.ArrayList;
  * The Database interface defining things all Database implementations should have.
  */
 public interface Database {
-    public void write() throws IOException;
+    void write() throws IOException;
 
     // ===============================================
     // Getters
     // ===============================================
-    public TableFindable<Requirement> getRequirementTable();
+    TableFindable<Requirement> getRequirementTable();
 
-    public TableFindable<Staff> getStaffTable();
+    TableFindable<Staff> getStaffTable();
 
-    public TableFilterableByTypes<Assignment> getAssignmentTable();
+    TableFilterableByAssignmentElements<Assignment> getAssignmentTable();
 
     // ===============================================
-    // Cleaner Methods
+    // Cleaner Method
     // ===============================================
-    public void cleanlyRemoveStaff(Staff staff);
+    void cleanlyRemove(AssignmentElement item);
 
-    public void cleanlyRemoveRequirement(Requirement requirement);
-
-    public ArrayList<Requirement> getRequirementsWithoutEnoughPeople();
+    // ===============================================
+    // Filter Method
+    // ===============================================
+    ArrayList<Requirement> getRequirementsWithoutEnoughPeople();
 
     // ===============================================
     // Display Matrices
     // ===============================================
-    public Object[][] getRequirementsDisplayMatrix();
+    Object[][] getRequirementsDisplayMatrix();
 
-    public Object[][] getStaffDisplayMatrix();
+    Object[][] getStaffDisplayMatrix();
 }

@@ -1,5 +1,6 @@
-package src.view.staff;
+package src.view.popups.staff;
 
+import src.ApplicationController;
 import src.database.interfaces.Database;
 import src.database.types.Staff;
 import src.view.components.JLabelAndComboBox;
@@ -7,33 +8,33 @@ import src.view.components.JLabelAndField;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class TrainStaffFrame extends JFrame {
+public class STrainingFrame extends JFrame {
     JLabelAndField skill;
     JLabelAndComboBox namePicker;
     JButton sendButton;
     ArrayList<Staff> nameList;
-
+    ApplicationController parent;
     Database database;
 
-    public TrainStaffFrame(ActionListener listener, Database database) {
+    public STrainingFrame(ApplicationController controller) {
+        parent = controller;
+        database = controller.getDatabase();
+        nameList = database.getStaffTable().getTable();
+
+        // Setup window
         setSize(300, 200);
         setTitle("Train Staff");
 
-        this.database = database;
-
+        // Setup UI elements
         JPanel contentPanel = new JPanel();
-
-        nameList = database.getStaffTable().getTable();
 
         namePicker = new JLabelAndComboBox("Name", generateSelections(nameList), null);
         skill = new JLabelAndField("Skill to add");
 
         sendButton = new JButton("Train");
-        sendButton.addActionListener(listener);
+        sendButton.addActionListener(controller);
 
         contentPanel.setLayout(new GridLayout(0, 1));
         contentPanel.add(namePicker);
@@ -44,33 +45,25 @@ public class TrainStaffFrame extends JFrame {
         this.add(sendButton, BorderLayout.SOUTH);
     }
 
-    private ArrayList<String> generateSelections(ArrayList<Staff> input) {
-        ArrayList<String> output = new ArrayList<String>();
-
-        for (Staff item : input) {
-            output.add("(" + item.getId() + ", " + item.getName() + ")");
-        }
-
-        return output;
-    }
-
+    // ===============================================
+    // Getters and Helpers
+    // ===============================================
     public JButton getSendButton() {
         return sendButton;
     }
 
-    public void trainStaff(Database database) {
-        Staff staff = nameList.get(namePicker.getUserInput());
-        for (String training : parseTrainings(skill.getUserInput())) {
-            staff.addTrainingReceived(training);
-        }
-    }
-
-    private ArrayList<String> parseTrainings(String input) {
+    private ArrayList<String> generateSelections(ArrayList<Staff> input) {
         ArrayList<String> output = new ArrayList<String>();
-        Scanner scanner = new Scanner(input);
-        while (scanner.hasNext()) {
-            output.add(scanner.next());
+        for (Staff item : input) {
+            output.add("(" + item.getId() + ", " + item.getName() + ")");
         }
         return output;
+    }
+
+    public void trainStaff(Database database) {
+        Staff staff = nameList.get(namePicker.getUserInput());
+        for (String training : parent.parseTrainingsString(skill.getUserInput())) {
+            staff.addTrainingReceived(training);
+        }
     }
 }

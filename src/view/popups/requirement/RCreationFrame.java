@@ -1,23 +1,26 @@
-package src.view.requirement;
+package src.view.popups.requirement;
 
+import src.ApplicationController;
 import src.database.types.Requirement;
 import src.database.types.builder.RequirementBuilder;
 import src.view.components.JLabelAndField;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public class AddRequirementFrame extends JFrame {
+public class RCreationFrame extends JFrame {
     JLabelAndField course, staffNumber, startDate, endDate, skill;
     JButton sendButton;
+    ApplicationController parent;
 
-    public AddRequirementFrame(ActionListener listener) {
+    public RCreationFrame(ApplicationController controller) {
+        parent = controller;
+
+        // Setup window
         setSize(300, 200);
         setTitle("Add Staff");
 
+        // Setup UI elements
         JPanel contentPanel = new JPanel();
 
         course = new JLabelAndField("Course");
@@ -27,7 +30,7 @@ public class AddRequirementFrame extends JFrame {
         skill = new JLabelAndField("Skills Needed");
 
         sendButton = new JButton("Create");
-        sendButton.addActionListener(listener);
+        sendButton.addActionListener(controller);
 
         contentPanel.setLayout(new GridLayout(0, 1));
         contentPanel.add(course);
@@ -41,29 +44,22 @@ public class AddRequirementFrame extends JFrame {
         this.add(sendButton, BorderLayout.SOUTH);
     }
 
+    // ===============================================
+    // Getters and Helpers
+    // ===============================================
     public JButton getSendButton() {
         return sendButton;
     }
 
     public Requirement getUserInput(int id) {
-        RequirementBuilder builder = RequirementBuilder.getInstance();
-
-        return builder
+        return RequirementBuilder
+                .getInstance()
                 .setId(id)
                 .setCourseId(Integer.parseInt(course.getUserInput()))
                 .setStartDate(startDate.getUserInput())
                 .setEndDate(endDate.getUserInput())
                 .setNumberOfStaffNeeded(Integer.parseInt(staffNumber.getUserInput()))
-                .setTrainingsNeeded(parseTrainings(skill.getUserInput()))
+                .setTrainingsNeeded(parent.parseTrainingsString(skill.getUserInput()))
                 .build();
-    }
-
-    private ArrayList<String> parseTrainings(String input) {
-        ArrayList<String> output = new ArrayList<String>();
-        Scanner scanner = new Scanner(input);
-        while (scanner.hasNext()) {
-            output.add(scanner.next());
-        }
-        return output;
     }
 }

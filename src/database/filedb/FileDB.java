@@ -4,11 +4,12 @@ import src.database.filedb.tables.AssignmentTable;
 import src.database.filedb.tables.RequirementTable;
 import src.database.filedb.tables.StaffTable;
 import src.database.interfaces.Database;
-import src.database.interfaces.tables.TableFilterableByTypes;
+import src.database.interfaces.tables.TableFilterableByAssignmentElements;
 import src.database.interfaces.tables.TableFindable;
 import src.database.types.Assignment;
 import src.database.types.Requirement;
 import src.database.types.Staff;
+import src.database.types.interfaces.AssignmentElement;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,11 +19,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileDB implements Database {
-    private String filepath;
-
+    private final String filepath;
     private TableFindable<Requirement> requirements = new RequirementTable();
     private TableFindable<Staff> staff = new StaffTable();
-    private TableFilterableByTypes<Assignment> assignments = new AssignmentTable();
+    private TableFilterableByAssignmentElements<Assignment> assignments = new AssignmentTable();
 
     /**
      * The initialiser of the File Database.
@@ -83,7 +83,7 @@ public class FileDB implements Database {
         writer.close();
     }
 
-    public TableFilterableByTypes<Assignment> getAssignmentTable() {
+    public TableFilterableByAssignmentElements<Assignment> getAssignmentTable() {
         return assignments;
     }
 
@@ -95,14 +95,14 @@ public class FileDB implements Database {
         return staff;
     }
 
-    public void cleanlyRemoveStaff(Staff staff) {
-        getStaffTable().remove(staff);
-        getAssignmentTable().cleanAllItemsRelatedTo(staff);
-    }
-
-    public void cleanlyRemoveRequirement(Requirement requirement) {
-        getRequirementTable().remove(requirement);
-        getAssignmentTable().cleanAllItemsRelatedTo(requirement);
+    public void cleanlyRemove(AssignmentElement item) {
+        if (item instanceof Staff) {
+            getStaffTable().remove((Staff) item);
+            getAssignmentTable().cleanAllItemsRelatedTo(item);
+        } else if (item instanceof Requirement) {
+            getRequirementTable().remove((Requirement) item);
+            getAssignmentTable().cleanAllItemsRelatedTo(item);
+        }
     }
 
     public ArrayList<Requirement> getRequirementsWithoutEnoughPeople() {
@@ -139,7 +139,7 @@ public class FileDB implements Database {
             String assigned = "";
 
             for (Assignment item : assignments.getAllItemsRelatedTo(temp.get(idx))) {
-                assigned += "(" + item.getStaff().getId() + ", " + item.getStaff().getName() + ") ";
+                assigned += item.getStaff().getDisplayString() + " ";
             }
             matrix[idx][6] = assigned;
         }
@@ -166,7 +166,7 @@ public class FileDB implements Database {
             String responsibility = "";
 
             for (Assignment item : assignments.getAllItemsRelatedTo(temp.get(idx))) {
-                responsibility += "(Lab " + item.getRequirement().getId() + ") ";
+                responsibility += item.getRequirement().getDisplayString() + " ";
             }
 
             matrix[idx][4] = responsibility;

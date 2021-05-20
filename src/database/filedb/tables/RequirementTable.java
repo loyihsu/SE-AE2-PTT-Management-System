@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RequirementTable implements TableFindable<Requirement> {
-    private ArrayList<Requirement> table;
+    private final ArrayList<Requirement> table;
 
     public RequirementTable() {
         table = new ArrayList<Requirement>();
@@ -49,6 +49,32 @@ public class RequirementTable implements TableFindable<Requirement> {
         }
     }
 
+    public String toString() {
+        String output = "";
+        for (Requirement item : table) {
+            output += item.toString() + "\n";
+        }
+        return output;
+    }
+
+    // ===============================================
+    // Table
+    // ===============================================
+    public ArrayList<Requirement> getTable() {
+        return table;
+    }
+
+    public void add(Requirement requirement) {
+        table.add(requirement);
+    }
+
+    public void remove(Requirement requirement) {
+        table.remove(requirement);
+    }
+
+    // ===============================================
+    // TableFindable
+    // ===============================================
     public Requirement find(int id) {
         for (Requirement item : table) {
             if (item.getId() == id) {
@@ -70,25 +96,5 @@ public class RequirementTable implements TableFindable<Requirement> {
             temp = newTemp;
         }
         return temp;
-    }
-
-    public ArrayList<Requirement> getTable() {
-        return table;
-    }
-
-    public void add(Requirement requirement) {
-        table.add(requirement);
-    }
-
-    public void remove(Requirement requirement) {
-        table.remove(requirement);
-    }
-
-    public String toString() {
-        String output = "";
-        for (Requirement item : table) {
-            output += item.toString() + "\n";
-        }
-        return output;
     }
 }
