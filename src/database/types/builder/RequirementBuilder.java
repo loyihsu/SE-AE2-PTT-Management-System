@@ -20,6 +20,12 @@ public class RequirementBuilder extends Builder<Requirement> {
     private RequirementBuilder() {
     }
 
+    /**
+     * Get the instance of builder.
+     * Fields (id, courseId, numberOfStaffNeeded, startDate, endDate, trainingsNeeded)
+     *
+     * @return The singleton builder.
+     */
     public static RequirementBuilder getInstance() {
         return instance;
     }

@@ -1,4 +1,4 @@
-package src.view.components;
+package src.view;
 
 /**
  * Table to be selected based on ModeSelector.

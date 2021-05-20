@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class JLabelAndComboBox extends JComponent {
-    JLabel label;
-    JComboBox box;
+    private final JLabel label;
+    private final JComboBox box;
 
     public JLabelAndComboBox(String string, ArrayList<String> selections, ActionListener listener) {
         // Setup Component
@@ -34,12 +34,22 @@ public class JLabelAndComboBox extends JComponent {
         return box;
     }
 
+    /**
+     * Get the index of selected item.
+     *
+     * @return Index of the item selected.
+     */
     public int getUserInput() {
         return box.getSelectedIndex();
     }
 
-    public void changeSelections(String[] selections) {
-        box.setModel(new DefaultComboBoxModel(selections));
+    /**
+     * Change choices to the contents of the String[] provided.
+     *
+     * @param choices The choices in String[] format.
+     */
+    public void changeChoices(String[] choices) {
+        box.setModel(new DefaultComboBoxModel(choices));
         box.repaint();
     }
 }

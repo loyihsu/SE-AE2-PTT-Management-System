@@ -12,11 +12,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class RAssignmentFrame extends JFrame {
-    JLabelAndComboBox lab, staff;
-    JButton sendButton;
-    Database database;
-    ArrayList<Requirement> requirements;
-    ArrayList<Staff> qualifiedStaff;
+    private final JLabelAndComboBox lab;
+    private final JLabelAndComboBox staff;
+    private final JButton sendButton;
+    private final Database database;
+    private ArrayList<Requirement> requirements;
+    private ArrayList<Staff> qualifiedStaff;
 
     public RAssignmentFrame(ApplicationController controller) {
         database = controller.getDatabase();
@@ -70,10 +71,10 @@ public class RAssignmentFrame extends JFrame {
     public void updateStaffSelections() {
         ArrayList<String> selections = generateStaffSelections();
         String[] array = selections.toArray(new String[selections.size()]);
-        staff.changeSelections(array);
+        staff.changeChoices(array);
     }
 
-    public Assignment getUserInput(Database database) {
+    public Assignment getUserInput() {
         Staff staff = qualifiedStaff.get(this.staff.getUserInput());
         Requirement requirement = requirements.get(lab.getUserInput());
         return new Assignment(staff, requirement);

@@ -26,9 +26,9 @@ public class FileDB implements Database {
 
     /**
      * The initialiser of the File Database.
-     * This initialiser throws a `FileNotFoundException`.
      *
      * @param path The path to the file to be read from and write to.
+     * @throws FileNotFoundException
      */
     public FileDB(String path) throws FileNotFoundException {
         filepath = path;
@@ -71,7 +71,8 @@ public class FileDB implements Database {
     /**
      * The write function of the File Database.
      * It will write the contents of the requirements and staff arraylists to the file specified in the initialiser.
-     * This method throws an `IOExcecption`.
+     *
+     * @throws IOException
      */
     public void write() throws IOException {
         FileWriter writer = new FileWriter(filepath);

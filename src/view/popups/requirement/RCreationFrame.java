@@ -9,9 +9,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RCreationFrame extends JFrame {
-    JLabelAndField course, staffNumber, startDate, endDate, skill;
-    JButton sendButton;
-    ApplicationController parent;
+    private final JLabelAndField course;
+    private final JLabelAndField staffNumber;
+    private final JLabelAndField startDate;
+    private final JLabelAndField endDate;
+    private final JLabelAndField skill;
+    private final JButton sendButton;
+    private final ApplicationController parent;
 
     public RCreationFrame(ApplicationController controller) {
         parent = controller;

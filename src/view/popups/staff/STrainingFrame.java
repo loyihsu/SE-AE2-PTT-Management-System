@@ -1,7 +1,6 @@
 package src.view.popups.staff;
 
 import src.ApplicationController;
-import src.database.interfaces.Database;
 import src.database.types.Staff;
 import src.view.components.JLabelAndComboBox;
 import src.view.components.JLabelAndField;
@@ -11,17 +10,15 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class STrainingFrame extends JFrame {
-    JLabelAndField skill;
-    JLabelAndComboBox namePicker;
-    JButton sendButton;
-    ArrayList<Staff> nameList;
-    ApplicationController parent;
-    Database database;
+    private final JLabelAndField skill;
+    private final JLabelAndComboBox namePicker;
+    private final JButton sendButton;
+    private final ArrayList<Staff> nameList;
+    private final ApplicationController parent;
 
     public STrainingFrame(ApplicationController controller) {
         parent = controller;
-        database = controller.getDatabase();
-        nameList = database.getStaffTable().getTable();
+        nameList = controller.getDatabase().getStaffTable().getTable();
 
         // Setup window
         setSize(300, 200);
@@ -30,7 +27,7 @@ public class STrainingFrame extends JFrame {
         // Setup UI elements
         JPanel contentPanel = new JPanel();
 
-        namePicker = new JLabelAndComboBox("Name", generateSelections(nameList), null);
+        namePicker = new JLabelAndComboBox("Name", generateChoices(nameList), null);
         skill = new JLabelAndField("Skill to add");
 
         sendButton = new JButton("Train");
@@ -52,7 +49,7 @@ public class STrainingFrame extends JFrame {
         return sendButton;
     }
 
-    private ArrayList<String> generateSelections(ArrayList<Staff> input) {
+    private ArrayList<String> generateChoices(ArrayList<Staff> input) {
         ArrayList<String> output = new ArrayList<String>();
         for (Staff item : input) {
             output.add("(" + item.getId() + ", " + item.getName() + ")");
@@ -60,7 +57,7 @@ public class STrainingFrame extends JFrame {
         return output;
     }
 
-    public void trainStaff(Database database) {
+    public void trainStaff() {
         Staff staff = nameList.get(namePicker.getUserInput());
         for (String training : parent.parseTrainingsString(skill.getUserInput())) {
             staff.addTrainingReceived(training);

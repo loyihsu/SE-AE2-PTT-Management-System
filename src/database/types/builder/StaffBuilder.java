@@ -18,6 +18,12 @@ public class StaffBuilder extends Builder<Staff> {
     private StaffBuilder() {
     }
 
+    /**
+     * Get the instance of builder.
+     * Fields (id, name, dateOfJoining, trainingsReceived)
+     *
+     * @return The singleton builder.
+     */
     public static StaffBuilder getInstance() {
         return instance;
     }

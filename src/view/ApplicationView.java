@@ -1,7 +1,6 @@
 package src.view;
 
 import src.ApplicationController;
-import src.view.components.ModeSelector;
 import src.view.components.TabContentPanel;
 
 import javax.swing.*;

@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class JLabelAndField extends JComponent {
-    JLabel label;
-    JTextField textField;
+    private final JLabel label;
+    private final JTextField textField;
 
     public JLabelAndField(String string) {
         // Setup Component
@@ -22,6 +22,12 @@ public class JLabelAndField extends JComponent {
     // ===============================================
     // Helper
     // ===============================================
+
+    /**
+     * Get the user inputted content in the textfield.
+     *
+     * @return The user inputted content of the textfield.
+     */
     public String getUserInput() {
         return textField.getText();
     }

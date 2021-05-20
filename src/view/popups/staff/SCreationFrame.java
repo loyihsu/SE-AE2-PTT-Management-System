@@ -9,9 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SCreationFrame extends JFrame {
-    JLabelAndField name, date, skill;
-    JButton sendButton;
-    ApplicationController parent;
+    private final JLabelAndField name;
+    private final JLabelAndField date;
+    private final JLabelAndField skill;
+    private final JButton sendButton;
+    private final ApplicationController parent;
 
     public SCreationFrame(ApplicationController controller) {
         parent = controller;

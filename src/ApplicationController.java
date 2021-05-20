@@ -6,7 +6,7 @@ import src.database.types.Requirement;
 import src.database.types.Staff;
 import src.database.types.interfaces.AssignmentElement;
 import src.view.ApplicationView;
-import src.view.components.ModeSelector;
+import src.view.ModeSelector;
 import src.view.popups.requirement.RAssignmentFrame;
 import src.view.popups.requirement.RCreationFrame;
 import src.view.popups.staff.SCreationFrame;
@@ -90,7 +90,7 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof RAssignmentFrame) {
             RAssignmentFrame current = (RAssignmentFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                database.getAssignmentTable().add(current.getUserInput(database));
+                database.getAssignmentTable().add(current.getUserInput());
                 view.getRequirementPanel().refreshTable();
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
@@ -114,7 +114,7 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof STrainingFrame) {
             STrainingFrame current = (STrainingFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                current.trainStaff(database);
+                current.trainStaff();
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
                 popup = null;
@@ -125,6 +125,13 @@ public class ApplicationController implements ActionListener {
     // ===============================================
     // Helpers
     // ===============================================
+
+    /**
+     * Set the popup and display.
+     * It will ignore the request if a popup is currently being displayed.
+     *
+     * @param view The next view to be displayed.
+     */
     private void setPopupAndSetVisible(JFrame view) {
         if (popup == null || popup.isVisible() == false) {
             popup = view;
@@ -132,6 +139,11 @@ public class ApplicationController implements ActionListener {
         }
     }
 
+    /**
+     * Uses the ModeSelector to serve different remover JOptionPane.
+     *
+     * @param mode ModeSelector REQUIREMENT or STAFF
+     */
     private void createRemoverOptionPane(ModeSelector mode) {
         String modeName = (mode == ModeSelector.REQUIREMENT) ? "Lab" : "Staff";
         String result = JOptionPane.showInputDialog(null, "Which " + modeName.toLowerCase() + " (id) would you like to remove?");
@@ -162,6 +174,12 @@ public class ApplicationController implements ActionListener {
         }
     }
 
+    /**
+     * Extracted function to parse training string to ArrayList. (separator: whitespace).
+     *
+     * @param input The raw String.
+     * @return The ArrayList with the parse result.
+     */
     public ArrayList<String> parseTrainingsString(String input) {
         ArrayList<String> output = new ArrayList<String>();
         Scanner scanner = new Scanner(input);
