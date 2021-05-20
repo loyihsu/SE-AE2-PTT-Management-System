@@ -1,8 +1,7 @@
 package src;
 
-import src.database.DatabaseDecorator;
 import src.database.filedb.FileDB;
-import src.database.interfaces.tables.Database;
+import src.database.interfaces.Database;
 import src.database.types.Requirement;
 import src.database.types.Staff;
 import src.view.ApplicationView;
@@ -18,16 +17,16 @@ import java.io.File;
 import java.io.IOException;
 
 public class ApplicationController implements ActionListener {
-    private DatabaseDecorator database;
+    private Database database;
     private ApplicationView view;
     private JFrame popup;
 
-    public ApplicationController(DatabaseDecorator database) {
+    public ApplicationController(Database database) {
         this.database = database;
-        this.view = new ApplicationView(this, database.getDatabase());
+        this.view = new ApplicationView(this, database);
     }
 
-    public DatabaseDecorator getDatabase() {
+    public Database getDatabase() {
         return database;
     }
 
@@ -44,13 +43,13 @@ public class ApplicationController implements ActionListener {
             setPopupAndSetVisible(new AddStaffFrame(this));
         } else if (event.getSource() == view.getStaffPanel().getMiddleButton()) {
             // Train Staff
-            setPopupAndSetVisible(new TrainStaffFrame(this, database.getDatabase()));
+            setPopupAndSetVisible(new TrainStaffFrame(this, database));
         } else if (event.getSource() == view.getStaffPanel().getLowerButton()) {
             // Remove Staff
             String result = JOptionPane.showInputDialog(null, "Which staff (id) would you like to remove?");
             try {
                 int id = Integer.parseInt(result);
-                Staff staff = database.getDatabase().getStaffTable().find(id);
+                Staff staff = database.getStaffTable().find(id);
                 if (staff == null) {
                     JOptionPane.showMessageDialog(null, "Invalid input: Staff doesn't exist.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -75,7 +74,7 @@ public class ApplicationController implements ActionListener {
             String result = JOptionPane.showInputDialog(null, "Which lab (id) would you like to remove?");
             try {
                 int id = Integer.parseInt(result);
-                Requirement requirement = database.getDatabase().getRequirementTable().find(id);
+                Requirement requirement = database.getRequirementTable().find(id);
                 if (requirement == null) {
                     JOptionPane.showMessageDialog(null, "Invalid input: Lab doesn't exist.", "Operation Failed", JOptionPane.ERROR_MESSAGE);
                 } else {
@@ -92,8 +91,8 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof AddRequirementFrame) {
             AddRequirementFrame current = (AddRequirementFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                int id = database.getDatabase().getRequirementTable().getTable().size() + 1;
-                database.getDatabase().getRequirementTable().add(current.getUserInput(id));
+                int id = database.getRequirementTable().getTable().size() + 1;
+                database.getRequirementTable().add(current.getUserInput(id));
                 view.getRequirementPanel().refreshTable();
                 popup.setVisible(false);
                 popup = null;
@@ -101,7 +100,7 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof AssignStaffFrame) {
             AssignStaffFrame current = (AssignStaffFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                database.getDatabase().getAssignmentTable().add(current.getUserInput(database.getDatabase()));
+                database.getAssignmentTable().add(current.getUserInput(database));
                 view.getRequirementPanel().refreshTable();
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
@@ -110,8 +109,8 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof AddStaffFrame) {
             AddStaffFrame current = (AddStaffFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                int id = database.getDatabase().getStaffTable().getTable().size() + 1;
-                database.getDatabase().getStaffTable().add(current.getUserInput(id));
+                int id = database.getStaffTable().getTable().size() + 1;
+                database.getStaffTable().add(current.getUserInput(id));
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
                 popup = null;
@@ -119,7 +118,7 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof TrainStaffFrame) {
             TrainStaffFrame current = (TrainStaffFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                current.trainStaff(database.getDatabase());
+                current.trainStaff(database);
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
                 popup = null;
@@ -138,7 +137,7 @@ public class ApplicationController implements ActionListener {
         // This code dynamically find the file.txt file in the database/filedb folder and create a Database object from it.
         String filepath = new File("./src/database/filedb/file.txt").getAbsolutePath();
         Database database = new FileDB(filepath);
-        ApplicationController controller = new ApplicationController(new DatabaseDecorator(database));
+        ApplicationController controller = new ApplicationController(database);
 
         JFrame gui = controller.getView();
         gui.setVisible(true);

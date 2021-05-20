@@ -1,6 +1,6 @@
 package src.view;
 
-import src.database.interfaces.tables.Database;
+import src.database.interfaces.Database;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

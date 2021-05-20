@@ -3,7 +3,7 @@ package src.database.filedb;
 import src.database.filedb.tables.AssignmentTable;
 import src.database.filedb.tables.RequirementTable;
 import src.database.filedb.tables.StaffTable;
-import src.database.interfaces.tables.Database;
+import src.database.interfaces.Database;
 import src.database.interfaces.tables.TableFilterableByTypes;
 import src.database.interfaces.tables.TableFindable;
 import src.database.types.Assignment;
@@ -93,6 +93,29 @@ public class FileDB implements Database {
 
     public TableFindable<Staff> getStaffTable() {
         return staff;
+    }
+
+    public void cleanlyRemoveStaff(Staff staff) {
+        getStaffTable().remove(staff);
+        getAssignmentTable().cleanAllItemsRelatedTo(staff);
+    }
+
+    public void cleanlyRemoveRequirement(Requirement requirement) {
+        getRequirementTable().remove(requirement);
+        getAssignmentTable().cleanAllItemsRelatedTo(requirement);
+    }
+
+    public ArrayList<Requirement> getRequirementsWithoutEnoughPeople() {
+        ArrayList<Requirement> items = new ArrayList<Requirement>();
+
+        for (Requirement item : getRequirementTable().getTable()) {
+            int numberNeeded = item.getNumberOfStaffNeeded();
+            int numberHas = getAssignmentTable().getAllItemsRelatedTo(item).size();
+            if (numberHas < numberNeeded) {
+                items.add(item);
+            }
+        }
+        return items;
     }
 
     public Object[][] getRequirementsDisplayMatrix() {

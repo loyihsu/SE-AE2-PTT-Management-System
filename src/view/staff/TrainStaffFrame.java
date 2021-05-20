@@ -1,6 +1,6 @@
 package src.view.staff;
 
-import src.database.interfaces.tables.Database;
+import src.database.interfaces.Database;
 import src.database.types.Staff;
 import src.view.components.JLabelAndComboBox;
 import src.view.components.JLabelAndField;
