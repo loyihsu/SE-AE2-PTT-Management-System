@@ -18,7 +18,7 @@ public class TestBuilders {
     @Test
     void testRequirementBuilder() {
         ArrayList<String> trainingsNeeded = new ArrayList<String>();
-        trainingsNeeded.add("Programming");
+        trainingsNeeded.add("programming");
         Requirement requirement1 = new Requirement(1, 2, 10, "01-01-2020", "03-30-2020", trainingsNeeded);
         Requirement requirement2 = RequirementBuilder
                 .getInstance()

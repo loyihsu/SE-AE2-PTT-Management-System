@@ -10,6 +10,7 @@ import src.database.types.Assignment;
 import src.database.types.Requirement;
 import src.database.types.Staff;
 import src.database.types.interfaces.AssignmentElement;
+import src.view.ModeSelector;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -94,6 +95,16 @@ public class FileDB implements Database {
 
     public TableFindable<Staff> getStaffTable() {
         return staff;
+    }
+
+    public int getNextId(ModeSelector mode) {
+        int next = 0;
+        if (mode == ModeSelector.REQUIREMENT) {
+            next = getRequirementTable().getTable().size() + 1;
+        } else if (mode == ModeSelector.STAFF) {
+            next = getStaffTable().getTable().size() + 1;
+        }
+        return next;
     }
 
     public void cleanlyRemove(AssignmentElement item) {

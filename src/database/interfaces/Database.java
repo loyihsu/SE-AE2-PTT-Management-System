@@ -6,6 +6,7 @@ import src.database.types.Assignment;
 import src.database.types.Requirement;
 import src.database.types.Staff;
 import src.database.types.interfaces.AssignmentElement;
+import src.view.ModeSelector;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +35,11 @@ public interface Database {
     // Filter Method
     // ===============================================
     ArrayList<Requirement> getRequirementsWithoutEnoughPeople();
+
+    // ===============================================
+    // Get next Id
+    // ===============================================
+    int getNextId(ModeSelector mode);
 
     // ===============================================
     // Display Matrices

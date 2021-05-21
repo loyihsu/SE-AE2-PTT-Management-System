@@ -81,7 +81,7 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof RCreationFrame) {
             RCreationFrame current = (RCreationFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                int id = database.getRequirementTable().getTable().size() + 1;
+                int id = database.getNextId(ModeSelector.REQUIREMENT);
                 database.getRequirementTable().add(current.getUserInput(id));
                 view.getRequirementPanel().refreshTable();
                 popup.setVisible(false);
@@ -105,7 +105,7 @@ public class ApplicationController implements ActionListener {
         } else if (popup instanceof SCreationFrame) {
             SCreationFrame current = (SCreationFrame) popup;
             if (event.getSource() == current.getSendButton()) {
-                int id = database.getStaffTable().getTable().size() + 1;
+                int id = database.getNextId(ModeSelector.STAFF);
                 database.getStaffTable().add(current.getUserInput(id));
                 view.getStaffPanel().refreshTable();
                 popup.setVisible(false);
