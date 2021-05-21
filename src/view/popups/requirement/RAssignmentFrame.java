@@ -28,12 +28,12 @@ public class RAssignmentFrame extends JFrame {
         setTitle("Assign Staff");
 
         // Setup UI elements
-        lab = new JLabelAndComboBox("Lab", generateRequirementSelections(), controller);
+        lab = new JLabelAndComboBox("Lab", generateRequirementChoices(), controller);
 
         Requirement item = requirements.get(lab.getUserInput());
         ArrayList<String> trainingsNeeded = item.getTrainingsNeeded();
         qualifiedStaff = database.getStaffTable().findWithSkills(trainingsNeeded);
-        staff = new JLabelAndComboBox("Staff", generateStaffSelections(), null);
+        staff = new JLabelAndComboBox("Staff", generateStaffChoices(), null);
 
         sendButton = new JButton("Assign");
         sendButton.addActionListener(controller);
@@ -51,7 +51,7 @@ public class RAssignmentFrame extends JFrame {
     // ===============================================
     // Helpers
     // ===============================================
-    private ArrayList<String> generateRequirementSelections() {
+    private ArrayList<String> generateRequirementChoices() {
         requirements = database.getRequirementsWithoutEnoughPeople();
         ArrayList<String> output = new ArrayList<String>();
         for (Requirement item : requirements) {
@@ -60,7 +60,7 @@ public class RAssignmentFrame extends JFrame {
         return output;
     }
 
-    private ArrayList<String> generateStaffSelections() {
+    private ArrayList<String> generateStaffChoices() {
         ArrayList<String> output = new ArrayList<String>();
         for (Staff staff : qualifiedStaff) {
             output.add("(" + staff.getId() + ", " + staff.getName() + ")");
@@ -68,8 +68,8 @@ public class RAssignmentFrame extends JFrame {
         return output;
     }
 
-    public void updateStaffSelections() {
-        ArrayList<String> selections = generateStaffSelections();
+    public void updateStaffChoices() {
+        ArrayList<String> selections = generateStaffChoices();
         String[] array = selections.toArray(new String[selections.size()]);
         staff.changeChoices(array);
     }

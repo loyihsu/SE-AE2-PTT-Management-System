@@ -100,7 +100,7 @@ public class ApplicationController implements ActionListener {
                 ArrayList<String> trainingsNeeded = item.getTrainingsNeeded();
                 ArrayList<Staff> qualifiedStaff = database.getStaffTable().findWithSkills(trainingsNeeded);
                 current.setQualifiedStaff(qualifiedStaff);
-                current.updateStaffSelections();
+                current.updateStaffChoices();
             }
         } else if (popup instanceof SCreationFrame) {
             SCreationFrame current = (SCreationFrame) popup;
