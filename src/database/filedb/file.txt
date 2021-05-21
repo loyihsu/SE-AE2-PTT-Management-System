@@ -2,13 +2,20 @@
 2,2,5,01-01-2020,03-23-2020,databaseDesign 
 3,2,4,01-01-2020,03-23-2020,programming 
 4,4,1,01-01-2021,30-03-2021,cybersecurity 
+5,3,3,01-01-2021,03-30-2021,databaseDesign 
 
 1,Leo,18-05-2019,programming 
 2,Alice,18-06-2020,
 3,Chris,01-01-2019,databaseDesign programming 
-4,Simon,01-01-2018,programming 
+4,Simon,01-01-2018,programming databaseDesign 
 5,Joe,14-04-2019,talking cybersecurity 
+6,Anna,21-05-2021,databaseDesign 
+7,Emma,21-05-2021,databaseDesign 
 
 1,3
 3,1
 5,4
+3,5
+6,5
+7,5
+4,1

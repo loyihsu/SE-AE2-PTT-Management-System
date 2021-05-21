@@ -105,8 +105,8 @@ public class FileDB implements Database {
                     .getId() + 1;
         } else if (mode == ModeSelector.STAFF) {
             next = getStaffTable().getTable()
-            .get(getStaffTable().getTable().size() - 1)
-            .getId() + 1;
+                    .get(getStaffTable().getTable().size() - 1)
+                    .getId() + 1;
         }
         return next;
     }
