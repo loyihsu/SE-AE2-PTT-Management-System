@@ -100,9 +100,13 @@ public class FileDB implements Database {
     public int getNextId(ModeSelector mode) {
         int next = 0;
         if (mode == ModeSelector.REQUIREMENT) {
-            next = getRequirementTable().getTable().size() + 1;
+            next = getRequirementTable().getTable()
+                    .get(getRequirementTable().getTable().size() - 1)
+                    .getId() + 1;
         } else if (mode == ModeSelector.STAFF) {
-            next = getStaffTable().getTable().size() + 1;
+            next = getStaffTable().getTable()
+            .get(getStaffTable().getTable().size() - 1)
+            .getId() + 1;
         }
         return next;
     }
