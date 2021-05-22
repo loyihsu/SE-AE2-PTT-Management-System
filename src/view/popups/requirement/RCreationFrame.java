@@ -22,7 +22,7 @@ public class RCreationFrame extends JFrame {
 
         // Setup window
         setSize(300, 200);
-        setTitle("Add Staff");
+        setTitle("Add Lab");
 
         // Setup UI elements
         JPanel contentPanel = new JPanel();
